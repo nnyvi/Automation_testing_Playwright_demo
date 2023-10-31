@@ -18,7 +18,7 @@ When('User clicks on "Tìm trên Google" button "1"', async () => {
 });
 Then('The "Apple" are displayed', async () => {
     await page.waitForSelector("//*[@class='main']");
-    await expect(page.locator("//*[contains(@class, 'CCgQ5')]")).toBeVisible();
+    await expect(page.locator("//*[contains(@class, 'SPZz6b')]")).toBeVisible();
 });
 
 //search for a link
