@@ -10,13 +10,13 @@ Given('User is on the Google homepage "1"', async () => {
     searchInfoPage = new SearchInfoPage();
 
 });
-When('user fills "Apple" in the search input', async () => {
+When('User fills "Apple" in the search input', async () => {
     searchInfoPage.fillInput('Apple');
 });
-When('user clicks on "Tìm trên Google" button "1"', async () => {
+When('User clicks on "Tìm trên Google" button "1"', async () => {
     searchInfoPage.pressButton();
 });
-Then('the "Apple" are displayed', async () => {
+Then('The "Apple" are displayed', async () => {
     await page.waitForSelector("//*[@class='main']");
     await expect(page.locator("//*[contains(@class, 'CCgQ5')]")).toBeVisible();
 });
@@ -25,13 +25,13 @@ Then('the "Apple" are displayed', async () => {
 Given('User is on the Google homepage "2"', async () => {
     searchInfoPage = new SearchInfoPage();
 });
-When('user fills "link" in the search input', async () => {
+When('User fills "link" in the search input', async () => {
     searchInfoPage.fillInput("https://bard.google.com/");
 });
-When('user clicks on "Tìm trên Google" button "2"', async () => {
+When('User clicks on "Tìm trên Google" button "2"', async () => {
     searchInfoPage.pressButton();
 });
-Then('the "link" are displayed', async () => {
+Then('The "link" are displayed', async () => {
     await page.waitForSelector("//*[@class='GyAeWb']");
     await expect(page.locator("//div[@class='tF2Cxc']//h3[@class='LC20lb MBeuO DKV0Md']")).toBeVisible();
 });
@@ -40,13 +40,13 @@ Then('the "link" are displayed', async () => {
 Given('User is on the Google homepage "3"', async () => {
     searchInfoPage = new SearchInfoPage();
 });
-When('user fills "TMA Bình Định" in the search input', async () => {
+When('User fills "TMA Bình Định" in the search input', async () => {
     searchInfoPage.fillInput("TMA Bình Định");
 });
-When('user clicks on "Tìm trên Google" button "3"', async () => {
+When('User clicks on "Tìm trên Google" button "3"', async () => {
     searchInfoPage.pressButton();
 });
-Then('the "TMA info" are displayed', async () => {
+Then('The "TMA info" are displayed', async () => {
     await page.waitForSelector("//*[@class='main']");
     await expect(page.locator("//img[@id ='lu_map']")).toBeVisible();
 });
