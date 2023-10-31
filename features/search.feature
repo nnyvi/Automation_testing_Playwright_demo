@@ -3,9 +3,9 @@ Feature: Google search
     @demo
     Scenario: Search for a "<information>"
         Given User is on the Google homepage "<num>"
-        When user fills "<search information>" in the search input
-        And user clicks on "Tìm trên Google" button "<id>"
-        Then the "<searched results>" are displayed
+        When User fills "<search information>" in the search input
+        And User clicks on "Tìm trên Google" button "<id>"
+        Then The "<searched results>" are displayed
 
         Examples:
             | num | information | search information | id | searched results |
@@ -16,9 +16,9 @@ Feature: Google search
     @image
     Scenario: Search for a product by image
         Given User is on the Google homepage <id>
-        When user clicks on the "Tìm kiếm bằng hình ảnh" button <id>
-        And user adds "<image>" into search input
-        Then the searched results are displayed <id>
+        When User clicks on the "Tìm kiếm bằng hình ảnh" button <id>
+        And User adds "<image>" into search input
+        Then The searched results are displayed <id>
 
         Examples:
             | id | image | id | id |
@@ -28,6 +28,6 @@ Feature: Google search
     @first
     Scenario: Access on the first searched page 
         Given User accesses on the Google homepage 
-        When user fills search information
-        And user click "Xem trang đầu tiên tìm được" button
-        Then user accesses on the first searched page
+        When User fills search information
+        And User click "Xem trang đầu tiên tìm được" button
+        Then User accesses on the first searched page
