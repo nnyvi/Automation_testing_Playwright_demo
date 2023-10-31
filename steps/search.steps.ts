@@ -9,13 +9,13 @@ let searchPage: SearchPage;
 Given('User is on the Google homepage "1"', async () => {
     searchPage = new SearchPage();
 });
-When('user fills "Apple" in the search input', async () => {
+When('User fills "Apple" in the search input', async () => {
     searchPage.fill_txtInput('Apple');
 });
-When('user clicks on "Tìm trên Google" button "1"', async () => {
+When('User clicks on "Tìm trên Google" button "1"', async () => {
     searchPage.press_searchBtn();
 });
-Then('the "Apple" are displayed', async () => {
+Then('The "Apple" are displayed', async () => {
     await expect(page.locator("//*[contains(@class, 'CCgQ5')]")).toBeVisible();
 });
 
@@ -23,13 +23,13 @@ Then('the "Apple" are displayed', async () => {
 Given('User is on the Google homepage "2"', async () => {
     searchPage = new SearchPage();
 });
-When('user fills "link" in the search input', async () => {
+When('User fills "link" in the search input', async () => {
     searchPage.fill_txtInput("https://bard.google.com/");
 });
-When('user clicks on "Tìm trên Google" button "2"', async () => {
+When('User clicks on "Tìm trên Google" button "2"', async () => {
     searchPage.press_searchBtn();
 });
-Then('the "link" are displayed', async () => {
+Then('The "link" are displayed', async () => {
     await expect(page.locator("//div[@class='tF2Cxc']//h3[@class='LC20lb MBeuO DKV0Md']")).toBeVisible();
 });
 
@@ -37,13 +37,13 @@ Then('the "link" are displayed', async () => {
 Given('User is on the Google homepage "3"', async () => {
     searchPage = new SearchPage();
 });
-When('user fills "TMA Bình Định" in the search input', async () => {
+When('User fills "TMA Bình Định" in the search input', async () => {
     searchPage.fill_txtInput("TMA Bình Định");
 });
-When('user clicks on "Tìm trên Google" button "3"', async () => {
+When('User clicks on "Tìm trên Google" button "3"', async () => {
     searchPage.press_searchBtn();
 });
-Then('the "TMA info" are displayed', async () => {
+Then('The "TMA info" are displayed', async () => {
     await expect(page.locator("//img[@id ='lu_map']")).toBeVisible();
 });
 
@@ -51,13 +51,13 @@ Then('the "TMA info" are displayed', async () => {
 Given('User is on the Google homepage 4', async () => {
     searchPage =  new SearchPage();
 });
-When('user clicks on the "Tìm kiếm bằng hình ảnh" button 4', async () => {
+When('User clicks on the "Tìm kiếm bằng hình ảnh" button 4', async () => {
     searchPage.press_ImgIcon();
 });
-When('user adds "image path" into search input', async () => {
+When('User adds "image path" into search input', async () => {
     searchPage.press_uploadBtn();
 });
-Then('the searched results are displayed 4', async() =>{
+Then('The searched results are displayed 4', async() =>{
     await page.waitForSelector("//body[@id='yDmH0d']");
     const expectPath = await page.locator("//img[@src='https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQv1FVZodKhWbJ58fG1o2cPkyaLN4_Mh51mg2RpGALhqv7IC984']");
     await expect(expectPath).toBeVisible();
@@ -66,13 +66,13 @@ Then('the searched results are displayed 4', async() =>{
 Given('User is on the Google homepage 5', async() => {
     searchPage =  new SearchPage();
 });
-When('user clicks on the "Tìm kiếm bằng hình ảnh" button 5', async() => {
+When('User clicks on the "Tìm kiếm bằng hình ảnh" button 5', async() => {
     searchPage.press_ImgIcon();
 });
-When('user adds "image link" into search input', async() => {
+When('User adds "image link" into search input', async() => {
     searchPage.fill_imgInput("https://i.pinimg.com/736x/cc/52/3f/cc523f7dc794dfed54aac0973348e541.jpg");
 });
-Then('the searched results are displayed 5', async() => {
+Then('The searched results are displayed 5', async() => {
     const expectLink = await page.locator("//img[@src='https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcS180KDJeNSEHfAReDb562WClIvmFiX-_FTjIVlQDiNdzncnU3_']");
     await expect(expectLink).toBeVisible();
 });
@@ -80,13 +80,13 @@ Then('the searched results are displayed 5', async() => {
 Given('User accesses on the Google homepage', async() => {
     searchPage =  new SearchPage();
 });
-When('user fills search information', async() => {
+When('User fills search information', async() => {
     searchPage.fill_txtInput('Apple');
 });
-When('user click "Xem trang đầu tiên tìm được" button', async() => {
+When('User click "Xem trang đầu tiên tìm được" button', async() => {
     searchPage.press_firstPageBtn();
 });
-Then('user accesses on the first searched page', async() => {
+Then('User accesses on the first searched page', async() => {
     const expectLogo = await page.locator("//a[@href='/vn/']");
     await expect(expectLogo).toBeVisible();
 });
