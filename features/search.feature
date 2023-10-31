@@ -22,8 +22,8 @@ Feature: Google search
 
         Examples:
             | id | image | id | id |
-            | 1 | image path  | 1 | 1 |
-            | 2 | image link  | 2 | 2 |
+            | 4 | image path  | 4 | 4 |
+            | 5 | image link  | 5 | 5 |
 
     @first
     Scenario: Access on the first searched page 
