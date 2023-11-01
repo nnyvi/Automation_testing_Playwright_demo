@@ -10,6 +10,13 @@ export class SearchPage {
     readonly uploadBtn: Locator;
     readonly imgInput: Locator;
     readonly searchImgBtn: Locator;
+    readonly Apple: Locator;
+    readonly Link: Locator;
+    readonly Location: Locator;
+    readonly expectLink: Locator;
+    readonly expectPath: Locator;
+    readonly expectFirst: Locator;
+    
     constructor() {
         this.txtInput = page.locator("//*[@class='gLFyf']");
         this.searchBtn = page.getByRole('button', { name: "Tìm trên Google" });
@@ -18,6 +25,12 @@ export class SearchPage {
         this.uploadBtn = page.locator("//span[@jsname='tAPGc']");
         this.imgInput = page.locator("//*[@class='cB9M7']");
         this.searchImgBtn = page.locator("//div[@class='Qwbd3']");
+        this.Apple = page.locator("//*[contains(@class, 'CCgQ5')]");
+        this.Link = page.locator("//div[@class='tF2Cxc']//h3[@class='LC20lb MBeuO DKV0Md']");
+        this.Location = page.locator("//img[@id ='lu_map']");
+        this.expectLink = page.locator("//img[@src='https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcS180KDJeNSEHfAReDb562WClIvmFiX-_FTjIVlQDiNdzncnU3_']");
+        this.expectPath = page.locator("//img[@src='https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQv1FVZodKhWbJ58fG1o2cPkyaLN4_Mh51mg2RpGALhqv7IC984']");
+        this.expectFirst = page.locator("//a[@href='/vn/']");
     }
     async fill_txtInput(txt: string) {
         await this.txtInput.click();

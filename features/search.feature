@@ -9,9 +9,9 @@ Feature: Google search
 
         Examples:
             | num | information | search information | id | searched results |
-            | 1 | product  | Apple  |1| Apple  |
-            | 2 | link  | link  |2| link  |
-            | 3 | location  | TMA Bình Định  |3| TMA info  |
+            | 1   | product     | Apple              | 1  | Apple            |
+            | 2   | link        | link               | 2  | link             |
+            | 3   | location    | TMA Bình Định      | 3  | TMA info         |
 
     @image
     Scenario: Search for a product by image
@@ -21,9 +21,9 @@ Feature: Google search
         Then The searched results are displayed <id>
 
         Examples:
-            | id | image | id | id |
-            | 4 | image path  | 4 | 4 |
-            | 5 | image link  | 5 | 5 |
+            | id | image      | id | id |
+            | 4  | image path | 4  | 4  |
+            | 5  | image link | 5  | 5  |
 
     @first
     Scenario: Access on the first searched page 
