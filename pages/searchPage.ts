@@ -27,22 +27,6 @@ export class SearchPage {
         await this.searchBtn.click();
         await page.waitForSelector("//*[@class='main']");
     }
-    async expect_searchBtn() {
-        const valueInput = await page.locator("//*[@jsname='yZiJbe']");
-        const valueProperty = await valueInput.getAttribute('value');
-        if (valueProperty == "Apple") {
-            await expect(page.locator("//*[contains(@class, 'SPZz6b')]")).toBeVisible();
-        }
-        else if (valueProperty == "https://bard.google.com/") {
-            await expect(page.locator("//div[@class='tF2Cxc']//h3[@class='LC20lb MBeuO DKV0Md']")).toBeVisible();
-        }
-        else if (valueProperty == "TMA Bình Định") {
-            await expect(page.locator("//img[@id ='lu_map']")).toBeVisible();
-        }
-        else {
-            return `There is no match`;
-        }
-    }
     async press_firstPageBtn() {
         await this.firstPageBtn.click();
         await page.waitForTimeout(30000);
