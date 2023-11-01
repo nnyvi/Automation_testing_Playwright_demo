@@ -46,7 +46,7 @@ export class SearchPage {
         } else if (fileChooserEvent !== null) {
             const fileChooser = fileChooserEvent as FileChooser;
             // Use fileChooser as normal
-            await fileChooser.setFiles('C:\Users\intern.nnyvi\demo\img\test.jpg');
+            await fileChooser.setFiles('C:\Users\intern.nnyvi\Playwright_BDD_demo\img\test.jpg');
         } else {
             // return notice when not receiving filechooser
             return (`Error: No file chooser found`);
