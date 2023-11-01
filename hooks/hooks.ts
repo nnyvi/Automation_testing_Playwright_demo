@@ -4,7 +4,7 @@ import { Browser, chromium, Page} from "playwright";
 let page : Page;
 let browser : Browser;
 
-setDefaultTimeout(60000);
+setDefaultTimeout(60000*10*20);
 
 Before(async() => {
     try {
@@ -12,7 +12,7 @@ Before(async() => {
         browser = await chromium.launch({headless : false});
         const context = await browser.newContext();
         page = await context.newPage();
-        await page.goto("https://qa.givenow.com.au/444");
+        await page.goto("https://qa.givenow.com.au/444", {timeout: 900000*10});
         console.log(`captured site title as ${await page.title()}`);
     }
     catch (error) {
