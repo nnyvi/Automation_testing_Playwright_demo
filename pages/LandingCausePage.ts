@@ -9,7 +9,7 @@ export class LandingCausePage {
         amountRadio: "//input[contains(@id, 'Option0')]/parent::label",
         form: "//div[@class='donation-payment py-0']",
         nextBtn: "//button[@data-step-target='2']",
-        nextBtnContact: "//button[@data-step-target='3']",
+        nextBtnQuestion: "//button[@data-step-target='3']",
         firstName: "//*[@id='firstName']",
         lastName: "//*[@id='lastName']",
         email: "//*[@id='contactForm.email']",
@@ -17,6 +17,13 @@ export class LandingCausePage {
         suburb: "//div[@id='s2id_address.locationId']",
         suburbTxt: "//*[contains(@class,'input') and contains(@id,'gen2')]",
         suburbVal: "//*[@class='select2-results'  and @id='select2-results-2']",
+        ques1: "//input[@id='answers0.answer2']",
+        ques2: "//input[@id='answers1.answer']",
+        giveNowBtn: "//button[@id='submitButton']",
+        cardNameError: "//label[@id='paymentCardName-error']",
+        cardNumberError: "//label[@id='paymentCardNumber-error']",
+        cardExpiryError: "//label[@id='paymentCardExpiry-error']",
+        alertDanger: "//p[@class='alert alert-danger']"
     }
 
     async clickDonateBtn() {
@@ -26,11 +33,6 @@ export class LandingCausePage {
     async selectAmount() {
         await page.click(this.Elements.amountRadio);
     }
-
-    // async hiddenNextBtn() {
-    //     await page.waitForSelector(this.Elements.form, { timeout: 50000*2});
-    //     await page.locator(this.Elements.nextBtn).dispatchEvent('click');
-    // }
 
     async verifyMessage(table: DataTable) {
         const expectText = table.raw()[0][0];
@@ -43,7 +45,7 @@ export class LandingCausePage {
         await page.click(this.Elements.nextBtn);
     }
 
-    async verifyMultiMessage(table: DataTable) {
+    async verifyContactMessage(table: DataTable) {
         const errorMessage = table.raw;
         for (let i = 0; i <= errorMessage.length; i++) {
             const expectText = table.raw()[i][0];
@@ -52,7 +54,7 @@ export class LandingCausePage {
         }
     }
 
-    async fillAmount(table: DataTable) {
+    async fillContact(table: DataTable) {
         const amountInfo = table.raw();
         await page.locator(this.Elements.firstName).fill(amountInfo[1][0]);
         await page.locator(this.Elements.lastName).fill(amountInfo[1][1]);
@@ -61,20 +63,19 @@ export class LandingCausePage {
         await page.dblclick(this.Elements.suburb);
         const suburbInput = page.locator(this.Elements.suburbTxt);
         await suburbInput.type(amountInfo[1][4]);
-        //const combobox = page.locator(this.Elements.suburbVal);
         await page.waitForTimeout(35000);
-        //await combobox.press('Enter');
-        //await page.click(this.Elements.suburbTxt);
         await suburbInput.press('Enter');
     }
 
-    async clickNextBtnContact() {
+    async clickNextBtnQuestion() {
         await page.waitForSelector(this.Elements.form, { timeout: 50000 });
-        await page.click(this.Elements.nextBtnContact);
+        await page.click(this.Elements.nextBtnQuestion);
     }
 
-    async VerifyMessageContact(table: DataTable) {
-        //await page.waitForSelector(this.Elements.form, { timeout: 70000 });
+    async clickotherButton() {
+        await page.click(this.Elements.nextBtnQuestion);
+    }
+    async VerifyQuestionMessage(table: DataTable) {
         const errorMessage = table.raw;
         for (let i = 0; i <= errorMessage.length; i++) {
             const expectText = table.raw()[i][0];
@@ -83,4 +84,25 @@ export class LandingCausePage {
         }
     }
 
+    async fillQuestions(table: DataTable) {
+        await page.locator(this.Elements.ques1).check();
+        await page.locator(this.Elements.ques2).fill(table.raw()[0][0])
+    }
+
+    async clickGiveNowBtn() {
+        await page.waitForSelector(this.Elements.form, { timeout: 50000 });
+        await page.click(this.Elements.giveNowBtn);
+    }
+
+    async VerifyPaymentMessage(table: DataTable) {
+        const errorMessage = table.raw();
+        const nameExpect = await page.textContent(this.Elements.cardNameError);
+        const numberExpect = await page.textContent(this.Elements.cardNumberError);
+        const ExpiryExpect = await page.textContent(this.Elements.cardExpiryError);
+        const alert = await page.textContent(this.Elements.alertDanger);
+        expect(nameExpect).toBe(errorMessage[0][0]);
+        expect(numberExpect).toBe(errorMessage[0][1]);
+        expect(ExpiryExpect).toBe(errorMessage[0][2]);
+        expect(alert).toBe(errorMessage[0][3])
+    }
 }
