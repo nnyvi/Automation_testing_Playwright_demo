@@ -19,11 +19,13 @@ export class LandingCausePage {
         suburbVal: "//*[@class='select2-results'  and @id='select2-results-2']",
         ques1: "//input[@id='answers0.answer2']",
         ques2: "//input[@id='answers1.answer']",
-        giveNowBtn: "//button[@id='submitButton']",
+        giveNowBtn: "//button[contains(@class,'gn-mw')]",
+        cardNameinput: "//input[@id='paymentCardName']",
         cardNameError: "//label[@id='paymentCardName-error']",
         cardNumberError: "//label[@id='paymentCardNumber-error']",
         cardExpiryError: "//label[@id='paymentCardExpiry-error']",
-        alertDanger: "//p[@class='alert alert-danger']"
+        alertDanger: "//p[@class='alert alert-danger']", 
+        nextQuesBtn: "//button[@id='procedButtonId']"
     }
 
     async clickDonateBtn() {
@@ -68,13 +70,15 @@ export class LandingCausePage {
     }
 
     async clickNextBtnQuestion() {
-        await page.waitForSelector(this.Elements.form, { timeout: 50000 });
+        await page.waitForSelector(this.Elements.form, { timeout: 20000 });
         await page.click(this.Elements.nextBtnQuestion);
     }
 
     async clickotherButton() {
-        await page.click(this.Elements.nextBtnQuestion);
+        await page.locator(this.Elements.nextQuesBtn).scrollIntoViewIfNeeded();
+        await page.click(this.Elements.nextQuesBtn);
     }
+
     async VerifyQuestionMessage(table: DataTable) {
         const errorMessage = table.raw;
         for (let i = 0; i <= errorMessage.length; i++) {
@@ -90,19 +94,26 @@ export class LandingCausePage {
     }
 
     async clickGiveNowBtn() {
-        await page.waitForSelector(this.Elements.form, { timeout: 50000 });
+        await page.waitForSelector(this.Elements.cardNameinput);
         await page.click(this.Elements.giveNowBtn);
     }
 
     async VerifyPaymentMessage(table: DataTable) {
         const errorMessage = table.raw();
-        const nameExpect = await page.textContent(this.Elements.cardNameError);
-        const numberExpect = await page.textContent(this.Elements.cardNumberError);
-        const ExpiryExpect = await page.textContent(this.Elements.cardExpiryError);
-        const alert = await page.textContent(this.Elements.alertDanger);
-        expect(nameExpect).toBe(errorMessage[0][0]);
-        expect(numberExpect).toBe(errorMessage[0][1]);
-        expect(ExpiryExpect).toBe(errorMessage[0][2]);
-        expect(alert).toBe(errorMessage[0][3])
+        const elements = [
+            this.Elements.cardNameError,
+            this.Elements.cardNumberError,
+            this.Elements.cardExpiryError,
+            this.Elements.alertDanger
+          ];
+          
+          const expectedValues = errorMessage[0];
+          
+          for (let i = 0; i < elements.length; i++) {
+            const element = elements[i];
+            const expectedValue = expectedValues[i];
+            const actualValue = await page.textContent(element);
+            expect(actualValue).toBe(expectedValue);
+          }
     }
 }

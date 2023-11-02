@@ -7,7 +7,7 @@ Feature: Landing Cause
 
     # Scenario: Verify the validation messages errors step Contact
     #     Given I select Amount to donate
-    #     When I click on Next button on step Contact
+    #     When I click on the Next button on step Contact
     #     Then I should validate many error messages in landing cause page step Contact
     #         | Please fill out this field.     |
     #         | Please fill out this field.     |
@@ -28,10 +28,10 @@ Feature: Landing Cause
 
     Scenario: Verify the validation messages errors step Payment
         Given I select Amount to donate 3
-        When I fill information on step Contact
+        When I fill information on step Contact 3
             | Firstname | Lastname | Email          | Adress | Suburb |
             | test      | test     | test@gmail.com | test   | ubu   |
-        And I click on Next button on step Contact
+        And I click on Next button on step Contact 3
         And I select Question 1 value and fill Question 2
             | test |
         And I click on Next button on step Questions more

@@ -20,7 +20,7 @@ let landingCausePage: LandingCausePage;
 //     landingCausePage.selectAmount();
 // });
 
-// When('I click on Next button on step Contact', function () {
+// When('I click on the Next button on step Contact', function () {
 //     landingCausePage.clickNextBtn();
 // });
 
@@ -28,7 +28,7 @@ let landingCausePage: LandingCausePage;
 //     expect(await landingCausePage.verifyContactMessage(table));
 // });
 
-//Verify the validation messages errors step Questions
+// //Verify the validation messages errors step Questions
 // Given('I select Amount to donate 2', function () {
 //     landingCausePage = new LandingCausePage();
 //     landingCausePage.selectAmount();
@@ -56,11 +56,11 @@ Given('I select Amount to donate 3', function () {
     landingCausePage.selectAmount();
 });
 
-When('I fill information on step Contact', async function (table: DataTable) {
+When('I fill information on step Contact 3', async function (table: DataTable) {
     await landingCausePage.fillContact(table);
 });
 
-When('I click on Next button on step Contact', function () {
+When('I click on Next button on step Contact 3', function () {
     landingCausePage.clickNextBtn();
 });
 
