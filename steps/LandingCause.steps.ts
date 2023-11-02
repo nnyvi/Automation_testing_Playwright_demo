@@ -43,10 +43,9 @@ When('I click on Next button on step Amount', function () {
 });
 
 When('I click on Next button on step Contact', function () {
-    landingCausePage.clickNextBtn();
+    landingCausePage.clickNextBtnContact();
 });
 
 Then('I should validate error messages in landing cause page step Contact', async function (table: DataTable) {
-    expect(await landingCausePage.verifyMessage(table));
+    expect(await landingCausePage.VerifyMessageContact(table));
 })
-
