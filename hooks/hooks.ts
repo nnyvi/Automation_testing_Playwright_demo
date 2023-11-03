@@ -4,7 +4,7 @@ import { Browser, chromium, Page} from "playwright";
 let page : Page;
 let browser : Browser;
 
-setDefaultTimeout(60000*2*100);
+setDefaultTimeout(60000*20*10);
 
 Before(async() => {
     try {

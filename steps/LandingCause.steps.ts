@@ -4,51 +4,51 @@ import { LandingCausePage } from '../pages/LandingCausePage';
 
 let landingCausePage: LandingCausePage;
 
-// //Verify the validation messages errors step Amount
-// Given('I click on Donation Now button', function () {
-//     landingCausePage = new LandingCausePage();
-//     landingCausePage.clickDonateBtn();
-// });
+//Verify the validation messages errors step Amount
+Given('I click on Donation Now button', function () {
+    landingCausePage = new LandingCausePage();
+    landingCausePage.clickDonateBtn();
+});
 
-// Then('I should validate error messages in landing cause page step Amount', async function (table: DataTable) {
-//     expect(await landingCausePage.verifyMessage(table));
-// });
+Then('I should validate error messages in landing cause page step Amount', async function (table: DataTable) {
+    expect(await landingCausePage.verifyMessage(table));
+});
 
-// //Verify the validation messages errors step Contact
-// Given('I select Amount to donate', function () {
-//     landingCausePage = new LandingCausePage();
-//     landingCausePage.selectAmount();
-// });
+//Verify the validation messages errors step Contact
+Given('I select Amount to donate', function () {
+    landingCausePage = new LandingCausePage();
+    landingCausePage.selectAmount();
+});
 
-// When('I click on the Next button on step Contact', function () {
-//     landingCausePage.clickNextBtn();
-// });
+When('I click on the Next button on step Contact', function () {
+    landingCausePage.clickNextBtn();
+});
 
-// Then('I should validate many error messages in landing cause page step Contact', async function (table: DataTable) {
-//     expect(await landingCausePage.verifyContactMessage(table));
-// });
+Then('I should validate many error messages in landing cause page step Contact', async function (table: DataTable) {
+    expect(await landingCausePage.verifyContactMessage(table));
+});
 
-// //Verify the validation messages errors step Questions
-// Given('I select Amount to donate 2', function () {
-//     landingCausePage = new LandingCausePage();
-//     landingCausePage.selectAmount();
-// });
+//Verify the validation messages errors step Questions
+Given('I select Amount to donate 2', function () {
+    landingCausePage = new LandingCausePage();
+    landingCausePage.selectAmount();
+});
 
-// When('I fill information on step Contact', async function (table: DataTable) {
-//     await landingCausePage.fillContact(table);
-// });
+When('I fill information on step Contact', async function (table: DataTable) {
+    await landingCausePage.fillContact(table);
+});
 
-// When('I click on Next button on step Contact', function () {
-//     landingCausePage.clickNextBtn();
-// });
+When('I click on Next button on step Contact', function () {
+    landingCausePage.clickNextBtn();
+});
 
-// When('I click on Next button on step Questions', function () {
-//     landingCausePage.clickNextBtnQuestion();
-// });
+When('I click on Next button on step Questions', function () {
+    landingCausePage.clickNextBtnQuestion();
+});
 
-// Then('I should validate error messages in landing cause page step Questions', async function (table: DataTable) {
-//     expect(await landingCausePage.VerifyQuestionMessage(table));
-// })
+Then('I should validate error messages in landing cause page step Questions', async function (table: DataTable) {
+    expect(await landingCausePage.VerifyQuestionMessage(table));
+})
 
 // Verify the validation messages errors step Payment
 Given('I select Amount to donate 3', function () {

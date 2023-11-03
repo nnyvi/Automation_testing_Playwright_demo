@@ -19,12 +19,12 @@ export class LandingCausePage {
         suburbVal: "//*[@class='select2-results'  and @id='select2-results-2']",
         ques1: "//input[@id='answers0.answer2']",
         ques2: "//input[@id='answers1.answer']",
-        giveNowBtn: "//button[contains(@class,'gn-mw')]",
-        cardNameinput: "//input[@id='paymentCardName']",
+        giveNowBtn: "//button[@style='visibility: visible;']",
+        cardError: "//label[text()='Please fill in this field.']",
         cardNameError: "//label[@id='paymentCardName-error']",
         cardNumberError: "//label[@id='paymentCardNumber-error']",
         cardExpiryError: "//label[@id='paymentCardExpiry-error']",
-        alertDanger: "//p[@class='alert alert-danger']", 
+        alertDanger: "//p[@class='alert alert-danger']",
         nextQuesBtn: "//button[@id='procedButtonId']"
     }
 
@@ -94,7 +94,7 @@ export class LandingCausePage {
     }
 
     async clickGiveNowBtn() {
-        await page.waitForSelector(this.Elements.cardNameinput);
+        await page.waitForSelector(this.Elements.giveNowBtn, { timeout: 20000 });
         await page.click(this.Elements.giveNowBtn);
     }
 
@@ -103,17 +103,17 @@ export class LandingCausePage {
         const elements = [
             this.Elements.cardNameError,
             this.Elements.cardNumberError,
-            this.Elements.cardExpiryError,
-            this.Elements.alertDanger
-          ];
-          
-          const expectedValues = errorMessage[0];
-          
-          for (let i = 0; i < elements.length; i++) {
+            this.Elements.cardExpiryError
+        ];
+
+        for (let i = 0; i < elements.length; i++) {
             const element = elements[i];
-            const expectedValue = expectedValues[i];
-            const actualValue = await page.textContent(element);
+            const expectedValue = table.raw()[i][0];
+            const iframe = await page.frameLocator('#mwIframe');
+            // Find element in iframe and get text content
+            const element1 = await iframe.locator(element);
+            const actualValue = await element1.textContent();
             expect(actualValue).toBe(expectedValue);
-          }
+        }
     }
 }
