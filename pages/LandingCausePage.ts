@@ -43,7 +43,7 @@ export class LandingCausePage {
     }
 
     async clickNextBtn() {
-        await page.waitForSelector(this.Elements.form, { timeout: 50000 });
+        await page.waitForSelector(this.Elements.form, { timeout: 10000 });
         await page.click(this.Elements.nextBtn);
     }
 
@@ -65,12 +65,12 @@ export class LandingCausePage {
         await page.dblclick(this.Elements.suburb);
         const suburbInput = page.locator(this.Elements.suburbTxt);
         await suburbInput.type(amountInfo[1][4]);
-        await page.waitForTimeout(35000);
+        await page.waitForTimeout(2000);
         await suburbInput.press('Enter');
     }
 
     async clickNextBtnQuestion() {
-        await page.waitForSelector(this.Elements.form, { timeout: 20000 });
+        await page.waitForSelector(this.Elements.form, { timeout: 10000 });
         await page.click(this.Elements.nextBtnQuestion);
     }
 
@@ -94,7 +94,7 @@ export class LandingCausePage {
     }
 
     async clickGiveNowBtn() {
-        await page.waitForSelector(this.Elements.giveNowBtn, { timeout: 20000 });
+        await page.waitForSelector(this.Elements.giveNowBtn, { timeout: 10000 });
         await page.click(this.Elements.giveNowBtn);
     }
 
