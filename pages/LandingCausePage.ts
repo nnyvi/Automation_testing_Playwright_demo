@@ -20,12 +20,24 @@ export class LandingCausePage {
         ques1: "//input[@id='answers0.answer2']",
         ques2: "//input[@id='answers1.answer']",
         giveNowBtn: "//button[@style='visibility: visible;']",
-        cardError: "//label[text()='Please fill in this field.']",
+        cardholderName: "//input[@id='paymentCardName']",
         cardNameError: "//label[@id='paymentCardName-error']",
+        cardNumber: "//input[@id='paymentCardNumberMask']",
         cardNumberError: "//label[@id='paymentCardNumber-error']",
+        cardExpiry: "//input[@id='paymentCardExpiryMask']",
         cardExpiryError: "//label[@id='paymentCardExpiry-error']",
         alertDanger: "//p[@class='alert alert-danger']",
-        nextQuesBtn: "//button[@id='procedButtonId']"
+        nextQuesBtn: "//button[@id='procedButtonId']",
+        paymentSuccessMess: "//h2[@class='mt-0']",
+        editBtn: "//a[@class='dark-grey-link edit-raw-amount edit-link']",
+        updateAmountBtn: "//button[contains(@class, 'float-right w-100')]",
+        edittingInput: "//input[@placeholder = 'Other Amount' and @value = '10']", 
+        directDebitBtn: "//button[@class='btn-direct-debit btn btn-sm btn-payment-method-off']",
+        accountName: "//input[@id='directDebitForm.accountName']",
+        BSB: "//span[@id='select2-chosen-13']",
+        BSBtxt: "//input[@id='s2id_autogen13_search']",
+        accountNum: "//input[@id='directDebitForm.accountNumber']",
+        debitGiveNowBtn: "//button[@id='ddSubmitButton']"
     }
 
     async clickDonateBtn() {
@@ -43,7 +55,7 @@ export class LandingCausePage {
     }
 
     async clickNextBtn() {
-        await page.waitForSelector(this.Elements.form, { timeout: 10000 });
+        await page.waitForSelector(this.Elements.form, { timeout: 20000 });
         await page.click(this.Elements.nextBtn);
     }
 
@@ -99,7 +111,8 @@ export class LandingCausePage {
     }
 
     async VerifyPaymentMessage(table: DataTable) {
-        const errorMessage = table.raw();
+        //const errorMessage = table.raw();
+        await page.waitForTimeout(20000);
         const elements = [
             this.Elements.cardNameError,
             this.Elements.cardNumberError,
@@ -115,5 +128,52 @@ export class LandingCausePage {
             const actualValue = await element1.textContent();
             expect(actualValue).toBe(expectedValue);
         }
+    }
+
+    async fillCreditCard(table: DataTable) {
+        //const creditCardValue = table.raw();
+        const elements = [
+            this.Elements.cardholderName,
+            this.Elements.cardNumber,
+            this.Elements.cardExpiry
+        ];
+
+        for (let i = 0; i < elements.length; i++) {
+            const element = elements[i];
+            const creditValue = table.raw()[0][i];
+            const iframe = await page.frameLocator('#mwIframe');
+            const element1 = await iframe.locator(element);
+            await page.waitForTimeout(5000);
+            await element1.fill(creditValue);
+        }
+    }
+
+    async VerifySuccessPayment(table: DataTable){
+        const expectedValue = table.raw()[0][0];
+        const actualValue = await page.textContent(this.Elements.paymentSuccessMess);
+        expect(actualValue?.trim()).toBe(expectedValue.trim());
+    }
+    
+    async EditDonationAmount (table: DataTable) {
+        await page.click(this.Elements.editBtn);
+        const input = await page.locator(this.Elements.edittingInput);
+        await input.fill(table.raw()[0][0]);
+        await page.click(this.Elements.updateAmountBtn);
+    }
+
+    async FillDirectDebit (table: DataTable) {
+        const inputVal = table.raw()[0];
+        await page.click(this.Elements.directDebitBtn);
+        await page.locator(this.Elements.accountName).fill(inputVal[0]);
+        await page.dblclick(this.Elements.BSB);
+        const bsbtxt = page.locator(this.Elements.BSBtxt);
+        await bsbtxt.type(inputVal[1]);
+        await page.waitForTimeout(10000);
+        await bsbtxt.press("Enter");
+        await page.locator(this.Elements.accountNum).fill(inputVal[2]);
+    }
+
+    async clickGiveNowDebit() {
+        await page.click(this.Elements.debitGiveNowBtn);
     }
 }
