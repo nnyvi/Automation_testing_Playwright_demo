@@ -5,7 +5,7 @@ import { LandingCausePage } from '../pages/LandingCausePage';
 let landingCausePage: LandingCausePage;
 
 //Verify the validation messages errors step Amount
-Given('I click on Donation Now button', function () {
+Given('I click on "Donation Now" button', function () {
     landingCausePage = new LandingCausePage();
     landingCausePage.clickDonateBtn();
 });
@@ -15,12 +15,12 @@ Then('I should validate error messages in landing cause page step Amount', async
 });
 
 //Verify the validation messages errors step Contact
-Given('I select Amount to donate', function () {
+Given('I select Amount to donate --Contact', function () {
     landingCausePage = new LandingCausePage();
     landingCausePage.selectAmount();
 });
 
-When('I click on the Next button on step Contact', function () {
+When('I click on the "Next" button at the Contact form --Contact', function () {
     landingCausePage.clickNextBtn();
 });
 
@@ -29,127 +29,127 @@ Then('I should validate many error messages in landing cause page step Contact',
 });
 
 //Verify the validation messages errors step Questions
-Given('I select Amount to donate --second', function () {
+Given('I select Amount to donate --Questions', function () {
     landingCausePage = new LandingCausePage();
     landingCausePage.selectAmount();
 });
 
-When('I fill information on step Contact', async function (table: DataTable) {
+When('I fill in the information in the Contact form --Questions', async function (table: DataTable) {
     await landingCausePage.fillContact(table);
 });
 
-When('I click on Next button on step Contact', function () {
+When('I click on the "Next" button at the Contact form --Questions', function () {
     landingCausePage.clickNextBtn();
 });
 
-When('I click on Next button on step Questions', function () {
+When('I click on the "Next" button at the Questions form --Questions', function () {
     landingCausePage.clickNextBtnQuestion();
 });
 
 Then('I should validate error messages in landing cause page step Questions', async function (table: DataTable) {
-    expect(await landingCausePage.VerifyQuestionMessage(table));
+    expect(await landingCausePage.verifyQuestionMessage(table));
 })
 
 // Verify the validation messages errors step Payment
-Given('I select Amount to donate --third', function () {
+Given('I select Amount to donate --Payment', function () {
     landingCausePage = new LandingCausePage();
     landingCausePage.selectAmount();
 });
 
-When('I fill information on step Contact --third', async function (table: DataTable) {
+When('I fill in the information in the Contact form --Payment', async function (table: DataTable) {
     await landingCausePage.fillContact(table);
 });
 
-When('I click on Next button on step Contact --third', function () {
+When('I click on the "Next" button at the Contact form --Payment', function () {
     landingCausePage.clickNextBtn();
 });
 
-When('I select Question 1 value and fill Question 2 --third', function (table: DataTable) {
+When('I select Question 1 value and fill Question 2 --Payment', function (table: DataTable) {
     landingCausePage.fillQuestions(table);
 });
 
-When('I click on Next button on step Questions more --third', function () {
+When('I click on the "Next" button at the Questions form --Payment', function () {
     landingCausePage.clickotherButton();
 });
 
-When('I click on GiveNow button on step Payment --third', function () {
+When('I click on the "GiveNow" button at the Payment form --Payment', function () {
     landingCausePage.clickGiveNowBtn();
 });
 
 Then('I should validate error mesages in landing cause page step Payment', async function (table: DataTable) {
-    expect(await landingCausePage.VerifyPaymentMessage(table));
+    expect(await landingCausePage.verifyPaymentMessage(table));
 });
 
 //Verify the Thank you messages is displayed after payment is successful with Credit card payments
-Given('I select Amount to donate --forth', function () {
+Given('I select Amount to donate --Credit card', function () {
     landingCausePage = new LandingCausePage();
     landingCausePage.selectAmount();
 });
 
-When('I fill information on step Contact --forth', async function (table: DataTable) {
+When('I fill in the information in the Contact form --Credit card', async function (table: DataTable) {
     await landingCausePage.fillContact(table);
 });
 
-When('I click on Next button on step Contact --forth', function () {
+When('I click on the "Next" button at the Contact form --Credit card', function () {
     landingCausePage.clickNextBtn();
 });
 
-When('I select Question 1 value and fill Question 2 --forth', async function (table: DataTable) {
+When('I select Question 1 value and fill Question 2 --Credit card', async function (table: DataTable) {
     await landingCausePage.fillQuestions(table);
 });
 
-When('I click on Next button on step Questions more --forth', function () {
+When('I click on the "Next" button at the Questions form --Credit card', function () {
     landingCausePage.clickotherButton();
 });
 
-When('I fill credit card information on step Payment', async function (table: DataTable) {
+When('I fill credit card information at the Payment form --Credit card', async function (table: DataTable) {
     await landingCausePage.fillCreditCard(table);
 });
 
-When('I click on GiveNow button on step Payment --forth', async function () {
+When('I click on the "GiveNow" button at the Payment form --Credit card', async function () {
     await landingCausePage.clickGiveNowBtn();
 });
 
-Then('I see the Thank you messages displayed', async function (table: DataTable) {
-    expect ( await landingCausePage.VerifySuccessPayment(table));
+Then('I see the Thank you messages displayed --Credit card', async function (table: DataTable) {
+    expect(await landingCausePage.verifySuccessPayment(table));
 });
 
 //Verify the Thank you messages is displayed after edit total and payment is successful with Credit card payments
-Given('I select Amount to donate --fifth', function () {
+Given('I select Amount to donate --edit Credit', function () {
     landingCausePage = new LandingCausePage();
     landingCausePage.selectAmount();
 });
 
-When('I fill information on step Contact --fifth', async function (table: DataTable) {
+When('I fill in the information in the Contact form --edit Credit', async function (table: DataTable) {
     await landingCausePage.fillContact(table);
 });
 
-When('I click on Next button on step Contact --fifth', function () {
+When('I click on the "Next" button at the Contact form --edit Credit', function () {
     landingCausePage.clickNextBtn();
 });
 
-When('I select Question 1 value and fill Question 2 --fifth', async function (table: DataTable) {
+When('I select Question 1 value and fill Question 2 --edit Credit', async function (table: DataTable) {
     await landingCausePage.fillQuestions(table);
 });
 
-When('I click on Next button on step Questions more --fifth', function () {
+When('I click on the "Next" button at the Questions form --edit Credit', function () {
     landingCausePage.clickotherButton();
 });
 
 When('I edit donation Amount', async function (table: DataTable) {
-    await landingCausePage.EditDonationAmount(table);
+    await landingCausePage.editDonationAmount(table);
 });
 
-When('I fill credit card information on step Payment --fifth', async function (table: DataTable) {
+When('I fill credit card information at the Payment form --edit Credit', async function (table: DataTable) {
     await landingCausePage.fillCreditCard(table);
 });
 
-When('I click on GiveNow button on step Payment --fifth', async function () {
+When('I click on the "GiveNow" button at the Payment form --edit Credit', async function () {
     await landingCausePage.clickGiveNowBtn();
 });
 
-Then('I see the Thank you messages displayed --fifth', async function (table: DataTable) {
-    expect ( await landingCausePage.VerifySuccessPayment(table));
+Then('I see the Thank you messages displayed --edit Credit', async function (table: DataTable) {
+    expect(await landingCausePage.verifySuccessPayment(table));
 });
 
 //Verify that the user donation successfully when using Visa card
@@ -183,7 +183,7 @@ When('I click on GiveNow button on step Payment --Visa card', async function () 
 });
 
 Then('I see the Thank you messages displayed --Visa card', async function (table: DataTable) {
-    expect ( await landingCausePage.VerifySuccessPayment(table));
+    expect(await landingCausePage.verifySuccessPayment(table));
 });
 
 //Verify that the user donation successfully when using Master card
@@ -217,7 +217,7 @@ When('I click on GiveNow button on step Payment --Master card', async function (
 });
 
 Then('I see the Thank you messages displayed --Master card', async function (table: DataTable) {
-    expect ( await landingCausePage.VerifySuccessPayment(table));
+    expect(await landingCausePage.verifySuccessPayment(table));
 });
 
 //Verify that the user donation successfully when using Amex card
@@ -251,7 +251,7 @@ When('I click on GiveNow button on step Payment --Amex card', async function () 
 });
 
 Then('I see the Thank you messages displayed --Amex card', async function (table: DataTable) {
-    expect ( await landingCausePage.VerifySuccessPayment(table));
+    expect(await landingCausePage.verifySuccessPayment(table));
 });
 
 //Verify the Thank you messages is displayed after payment is successful with Direct Debit payments
@@ -277,7 +277,7 @@ When('I click on Next button on step Questions more --Direct Debit', function ()
 });
 
 When('I fill Direct Debit information on step Payment --Direct Debit', async function (table: DataTable) {
-   await landingCausePage.FillDirectDebit(table);
+    await landingCausePage.fillDirectDebit(table);
 });
 
 When('I click on GiveNow button on step Payment --Direct Debit', function () {
@@ -285,5 +285,324 @@ When('I click on GiveNow button on step Payment --Direct Debit', function () {
 });
 
 Then('I see the Thank you messages displayed --Direct Debit', async function (table: DataTable) {
-    expect (await landingCausePage.VerifySuccessPayment(table));
+    expect(await landingCausePage.verifySuccessPayment(table));
 });
+
+//Verify that the tooltip is displayed
+Given('I select Amount to donate --tooltip', function () {
+    landingCausePage = new LandingCausePage();
+    landingCausePage.selectAmount();
+});
+
+When('I fill information on step Contact --tooltip', async function (table: DataTable) {
+    await landingCausePage.fillContact(table);
+});
+
+When('I click on Next button on step Contact --tooltip', function () {
+    landingCausePage.clickNextBtn();
+});
+
+When('I select Question 1 value and fill Question 2 --tooltip', async function (table: DataTable) {
+    await landingCausePage.fillQuestions(table);
+});
+
+When('I click on Next button on step Questions more --tooltip', function () {
+    landingCausePage.clickotherButton();
+});
+
+When('I hover over the Question circle icon --tooltip', function () {
+    landingCausePage.clickQuesIcon();
+});
+
+Then('I see the tooltip displayed --tooltip', async function (table: DataTable) {
+    expect(await landingCausePage.verifyTooltipTxt(table));
+})
+
+//Verify that the donation is successful when ON the checkbox "Is this a company donation?"
+Given('I select Amount to donate --company', function () {
+    landingCausePage = new LandingCausePage();
+    landingCausePage.selectAmount();
+});
+
+When('I fill information on step Contact --company', async function (table: DataTable) {
+    await landingCausePage.fillContact(table);
+});
+
+When('I click on "Is this a company donation?" checkbox --company', async function (table: DataTable) {
+    await landingCausePage.clickCompanyChk(table);
+});
+
+When('I click on Next button on step Contact --company', function () {
+    landingCausePage.clickNextBtn();
+});
+
+When('I select Question 1 value and fill Question 2 --company', async function (table: DataTable) {
+    await landingCausePage.fillQuestions(table);
+});
+
+When('I click on Next button on step Questions more --company', function () {
+    landingCausePage.clickotherButton();
+});
+
+When('I fill credit card information on step Payment --company', async function (table: DataTable) {
+    await landingCausePage.fillCreditCard(table);
+});
+
+When('I click on GiveNow button on step Payment --company', async function () {
+    await landingCausePage.clickGiveNowBtn();
+});
+
+Then('I see the Thank you messages displayed --company', async function (table: DataTable) {
+    expect(await landingCausePage.verifySuccessPayment(table));
+});
+
+//Verify the Thank you messages is displayed after remove fee and payment is successful with Credit card payments
+Given('I select Amount to donate --remove fee', function () {
+    landingCausePage = new LandingCausePage();
+    landingCausePage.selectAmount();
+});
+
+When('I fill information on step Contact --remove fee', async function (table: DataTable) {
+    await landingCausePage.fillContact(table);
+});
+
+When('I click on Next button on step Contact --remove fee', function () {
+    landingCausePage.clickNextBtn();
+});
+
+When('I select Question 1 value and fill Question 2 --remove fee', async function (table: DataTable) {
+    await landingCausePage.fillQuestions(table);
+});
+
+When('I click on Next button on step Questions more --remove fee', function () {
+    landingCausePage.clickotherButton();
+});
+
+When('I remove fee', function () {
+    landingCausePage.removeFee();
+});
+
+When('I fill credit card information on step Payment --remove fee', async function (table: DataTable) {
+    await landingCausePage.fillCreditCard(table);
+});
+
+When('I click on GiveNow button on step Payment --remove fee', async function () {
+    await landingCausePage.clickGiveNowBtn();
+});
+
+Then('I see the Thank you messages displayed --remove fee', async function (table: DataTable) {
+    expect(await landingCausePage.verifySuccessPayment(table));
+});
+
+//Verify the Thank you messages is displayed after remove fee and payment is successful with Credit card payments
+Given('I select Amount to donate --add fee', function () {
+    landingCausePage = new LandingCausePage();
+    landingCausePage.selectAmount();
+});
+
+When('I fill information on step Contact --add fee', async function (table: DataTable) {
+    await landingCausePage.fillContact(table);
+    await landingCausePage.clickNextBtn();
+});
+
+When('I select Question 1 value and fill Question 2 --add fee', async function (table: DataTable) {
+    await landingCausePage.fillQuestions(table);
+    await landingCausePage.clickotherButton();
+});
+
+When('I remove fee --add fee', function () {
+    landingCausePage.removeFee();
+});
+
+When('I add fee', function () {
+    landingCausePage.addFee();
+});
+
+When('I fill credit card information on step Payment --add fee', async function (table: DataTable) {
+    await landingCausePage.fillCreditCard(table);
+});
+
+When('I click on GiveNow button on step Payment --add fee', async function () {
+    await landingCausePage.clickGiveNowBtn();
+});
+
+Then('I see the Thank you messages displayed --add fee', async function (table: DataTable) {
+    expect(await landingCausePage.verifySuccessPayment(table));
+});
+
+//Verify that the donation unsuccessfully when entering less than 3 characters in the Cardholder name field
+Given('I select Amount to donate --Cardholder', function () {
+    landingCausePage = new LandingCausePage();
+    landingCausePage.selectAmount();
+});
+
+When('I fill in the information in the Contact form --Cardholder', async function (table: DataTable) {
+    await landingCausePage.fillContact(table);
+});
+
+When('I click on the "Next" button at the Contact form --Cardholder', function () {
+    landingCausePage.clickNextBtn();
+});
+
+When('I select Question 1 value and fill Question 2 --Cardholder', async function (table: DataTable) {
+    await landingCausePage.fillQuestions(table);
+});
+
+When('I click on the "Next" button at the Questions form --Cardholder', function () {
+    landingCausePage.clickotherButton();
+});
+
+When('I fill less than 3 characters in the Cardholder name field at the Payment form --Cardholder', async function (table: DataTable) {
+    await landingCausePage.fillCardholder(table);
+});
+
+Then('I see the error message displayed --Cardholder', async function (table: DataTable) {
+    expect(await landingCausePage.verifyCardholderError(table));
+});
+
+//Verify that the donation unsuccessfully when entering an invalid card number in the Card Number field
+Given('I select Amount to donate --invalid card', function () {
+    landingCausePage = new LandingCausePage();
+    landingCausePage.selectAmount();
+});
+
+When('I fill in the information in the Contact form --invalid card', async function (table: DataTable) {
+    await landingCausePage.fillContact(table);
+});
+
+When('I click on the "Next" button at the Contact form --invalid card', function () {
+    landingCausePage.clickNextBtn();
+});
+
+When('I select Question 1 value and fill Question 2 --invalid card', async function (table: DataTable) {
+    await landingCausePage.fillQuestions(table);
+});
+
+When('I click on the "Next" button at the Questions form --invalid card', function () {
+    landingCausePage.clickotherButton();
+});
+
+When('I fill invalid card information at the Payment form --invalid card', async function (table: DataTable) {
+    await landingCausePage.fillCreditCard(table);
+});
+
+When('I click on the "GiveNow" button at the Payment form --invalid card', async function () {
+    await landingCausePage.clickGiveNowBtn();
+});
+
+Then('I see the unsuccess donation message displayed --invalid card', async function (table: DataTable) {
+    expect(await landingCausePage.verifyErrorMessage(table));
+});
+
+//Verify that the donation unsuccessfully when entering date invalid in the MMYY field
+Given('I select Amount to donate --date invalid', function () {
+    landingCausePage = new LandingCausePage();
+    landingCausePage.selectAmount();
+});
+
+When('I fill in the information in the Contact form --date invalid', async function (table: DataTable) {
+    await landingCausePage.fillContact(table);
+});
+
+When('I click on the "Next" button at the Contact form --date invalid', function () {
+    landingCausePage.clickNextBtn();
+});
+
+When('I select Question 1 value and fill Question 2 --date invalid', async function (table: DataTable) {
+    await landingCausePage.fillQuestions(table);
+});
+
+When('I click on the "Next" button at the Questions form --date invalid', function () {
+    landingCausePage.clickotherButton();
+});
+
+When('I fill invalid date in the Cardholder name field at the Payment form --date invalid', async function (table: DataTable) {
+    await landingCausePage.fillDate(table);
+});
+
+Then('I see the error message displayed --date invalid', async function (table: DataTable) {
+    expect(await landingCausePage.verifyExpiryError(table));
+});
+
+//Verify that the donation unsuccessfully when the input card expired
+Given('I select Amount to donate --expired card', function () {
+    landingCausePage = new LandingCausePage();
+    landingCausePage.selectAmount();
+});
+
+When('I fill in the information in the Contact form --expired card', async function (table: DataTable) {
+    await landingCausePage.fillContact(table);
+});
+
+When('I click on the "Next" button at the Contact form --expired card', function () {
+    landingCausePage.clickNextBtn();
+});
+
+When('I select Question 1 value and fill Question 2 --expired card', async function (table: DataTable) {
+    await landingCausePage.fillQuestions(table);
+});
+
+When('I click on the "Next" button at the Questions form --expired card', function () {
+    landingCausePage.clickotherButton();
+});
+
+When('I fill expired card information at the Payment form --expired card', async function (table: DataTable) {
+    await landingCausePage.fillCreditCard(table);
+});
+
+When('I click on the "GiveNow" button at the Payment form --expired card', async function () {
+    await landingCausePage.clickGiveNowBtn();
+});
+
+Then('I see the unsuccess donation message displayed --expired card', async function (table: DataTable) {
+    expect(await landingCausePage.verifyErrorMessage(table));
+});
+
+//Verify that the donation unsuccessfully when the "BSB" field is blank
+Given('I select Amount to donate --BSB blank', function () {
+    landingCausePage = new LandingCausePage();
+    landingCausePage.selectAmount();
+});
+
+When('I fill in the information in the Contact form and click Next button --BSB blank', async function (table: DataTable) {
+    await landingCausePage.fillContact(table);
+    await landingCausePage.clickNextBtn();
+});
+
+When('I select Question 1 value and fill Question 2 and click Next button --BSB blank', async function (table: DataTable) {
+    await landingCausePage.fillQuestions(table);
+    await landingCausePage.clickotherButton();
+});
+
+When('I fill in "Account Name" and "Account Number" field and click GiveNow button --BSB blank', async function (table: DataTable) {
+    await landingCausePage.fillBSBblank(table);
+    await landingCausePage.clickGiveNowDebit();
+});
+
+Then('I see the error message displayed --BSB blank', async function (table: DataTable) {
+    expect(await landingCausePage.verifyDebitError(table));
+});
+
+//Verify that the donation unsuccessfully when entering less than 3 characters in the "Account Number" field
+Given('I select Amount to donate --Account Number', function () {
+    landingCausePage = new LandingCausePage();
+    landingCausePage.selectAmount();
+});
+
+When('I fill in the information in the Contact form and click Next button --Account Number', async function (table: DataTable) {
+    await landingCausePage.fillContact(table);
+    await landingCausePage.clickNextBtn();
+});
+
+When('I select Question 1 value and fill Question 2 and click Next button --Account Number', async function (table: DataTable) {
+    await landingCausePage.fillQuestions(table);
+    await landingCausePage.clickotherButton();
+});
+
+When('I enter less than 3 characters in the "Account Number" field --Account Number', async function(table: DataTable){
+    await landingCausePage.fillAccountNum(table);
+});
+
+Then('I see the error message displayed --Account Number', async function (table: DataTable){
+    expect(await landingCausePage.verifyDebitError(table));
+})
