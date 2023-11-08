@@ -1,13 +1,18 @@
 import { expect } from "playwright/test";
 import { page } from "../hooks/hooks";
 import { DataTable } from "@cucumber/cucumber";
-import { isAwaitKeyword } from "typescript";
 
 export class LandingCausePage {
     private Elements = {
         donateBtn: "//button[contains(text(), 'Donate Now')]",
         messageFail: "//ul[@class='list-unstyled']//li",
         amountRadio: "//input[contains(@id, 'Option0')]/parent::label",
+        ongoingChk: "//label[@for='donationOngoing']",
+        endDateinput: "//input[@id='endDate']",
+        nextYearicon: "//span[@class='ui-icon ui-icon-circle-triangle-e']",
+        datePicker: "//div[@id='ui-datepicker-div']",
+        futureDate: "//td[@data-month='1' and @data-year='2024']//a[text()='29']",
+        oneOffBtn: "//span[@class='One-off']/parent::label",
         form: "//div[@class='donation-payment py-0']",
         nextBtn: "//button[@data-step-target='2']",
         nextBtnQuestion: "//button[@data-step-target='3']",
@@ -49,6 +54,11 @@ export class LandingCausePage {
         removeFeeBtn: "//*[contains(text(),'Remove Fee')]",
         coverBtn: "//*[text()='Cover']",
         addFeeBtn: "//*[contains(text(),'Add Fee')]",
+        CVVinput: "//input[@id='paymentCardCSC']",
+        CVVError: "//label[@id='paymentCardCSC-error']",
+        AUhyperlink: "//a[text()='Enter a foreign address']",
+        fromAUs: "//i[contains(text(),'From Australia')]",
+        notFromAUs: "//i[contains(text(),'Not from Australia?')]"
     }
 
     async clickDonateBtn() {
@@ -57,6 +67,11 @@ export class LandingCausePage {
 
     async selectAmount() {
         await page.click(this.Elements.amountRadio);
+    }
+
+    async clickOneOff() {
+        await page.click(this.Elements.oneOffBtn);
+        
     }
 
     async verifyMessage(table: DataTable) {
@@ -267,4 +282,69 @@ export class LandingCausePage {
         await page.click(this.Elements.directDebitBtn);
         await page.locator(this.Elements.accountNum).fill(table.raw()[0][0]);
     };
+
+    async fillCVV(table: DataTable) {
+        const iframe = await page.frameLocator('#mwIframe');
+        const cvv = await iframe.locator(this.Elements.CVVinput);
+        await cvv.fill(table.raw()[0][0]);
+        await cvv.press("Tab");
+    };
+
+    async verifyCVVinput(table: DataTable) {
+        const expectedMess = table.raw()[0][0];
+        const iframe = await page.frameLocator('#mwIframe');
+        const element = await iframe.locator(this.Elements.CVVError);
+        const actualMess = await element.textContent();
+        expect (actualMess).toBe(expectedMess);
+    }
+
+    async clickAUhyperlink() {
+        await page.click(this.Elements.AUhyperlink);
+    }
+
+    async verifyfromAUform() {
+        await expect(page.locator(this.Elements.fromAUs)).toBeVisible();
+    }
+
+    async verifyNotfromAUform() {
+        await expect(page.locator(this.Elements.notFromAUs)).toBeVisible();
+    }
+
+    async clickOngoingChk() {
+        await page.uncheck(this.Elements.ongoingChk);
+    }
+
+    async chooseFutureDate() {
+        await page.click(this.Elements.endDateinput);
+        for (let i = 0 ; i < 3 ; i ++) {
+            await page.waitForSelector(this.Elements.nextYearicon);
+            await page.click(this.Elements.nextYearicon);
+        }
+        await page.waitForSelector(this.Elements.datePicker);
+        await page.click(this.Elements.futureDate);
+    }
+
+    async verifyFutureDate() {
+        await expect(page.locator(this.Elements.messageFail)).not.toBeVisible();
+    }
+
+    async chooseCurrentDate() {
+        const element = page.locator(this.Elements.endDateinput);
+        await element.click();
+        const currentDate = new Date();
+        const dateTxt = `${currentDate.getDate()}-${currentDate.getMonth()}-${currentDate.getFullYear()}`;
+        await element.fill(dateTxt);
+    }
+
+    async verifyInvalidDate(table: DataTable) {
+        const errorMessage = table.raw()[0][0];
+        const actualMessage = await page.textContent(this.Elements.messageFail);
+        expect(actualMessage).toBe(errorMessage);
+    }
+
+    async choosePastDate(table: DataTable) {
+        const element = await page.locator(this.Elements.endDateinput);
+        await element.click();
+        await element.fill(table.raw()[0][0]);
+    }
 }
