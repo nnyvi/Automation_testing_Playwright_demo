@@ -96,10 +96,15 @@ export class LandingCausePage {
 
     async fillContact(table: DataTable) {
         const amountInfo = table.raw();
-        await page.locator(this.Elements.firstName).fill(amountInfo[1][0]);
-        await page.locator(this.Elements.lastName).fill(amountInfo[1][1]);
-        await page.locator(this.Elements.email).fill(amountInfo[1][2]);
-        await page.locator(this.Elements.address).fill(amountInfo[1][3]);
+        const elements = [
+            this.Elements.firstName,
+            this.Elements.lastName,
+            this.Elements.email,
+            this.Elements.address
+        ];
+        for (let i = 0; i < elements.length; i++) {
+            await page.locator(elements[i]).fill(amountInfo[1][i]);
+        }
         await page.dblclick(this.Elements.suburb);
         const suburbInput = page.locator(this.Elements.suburbTxt);
         await suburbInput.type(amountInfo[1][4]);
@@ -244,6 +249,22 @@ export class LandingCausePage {
         expect (actualValue).toBe(expectedValue);
     }
 
+    async verifyCardNumberError(table: DataTable){
+        const expectedValue = table.raw()[0][0];
+        const ifream = await page.frameLocator('#mwIframe');
+        const element = await ifream.locator(this.Elements.cardNumberError);
+        const actualValue = await element.textContent();
+        expect (actualValue).toBe(expectedValue);
+    }
+
+    async verifyExpiryError(table: DataTable){
+        const expectedValue = table.raw()[0][0];
+        const ifream = await page.frameLocator('#mwIframe');
+        const element = await ifream.locator(this.Elements.cardExpiryError);
+        const actualValue = await element.textContent();
+        expect (actualValue).toBe(expectedValue);
+    }
+
     async verifyErrorMessage(table: DataTable){
         const expectedValue = table.raw()[0][0];
         const actualValue = await page.textContent(this.Elements.paymentErrorMess);
@@ -256,14 +277,6 @@ export class LandingCausePage {
         const element = await iframe.locator(this.Elements.cardExpiry);
         await element.fill(val);
         await element.press("Tab");
-    }
-
-    async verifyExpiryError(table: DataTable){
-        const expectedValue = table.raw()[0][0];
-        const ifream = await page.frameLocator('#mwIframe');
-        const element = await ifream.locator(this.Elements.cardExpiryError);
-        const actualValue = await element.textContent();
-        expect (actualValue).toBe(expectedValue);
     }
 
     async fillBSBblank(table: DataTable){

@@ -314,38 +314,48 @@ Feature: Landing Cause
     # Scenario: Verify that the user can choose an end date is a future date
     #     Given I click on "Would you like this donation to be ongoing?" checkbox --future
     #     When I choose an end date in the future
-    #     And I should  not see the red error validation message displayed --future
+    #     And I should not see the red error validation message displayed under End date field--future
 
     # Scenario: Verify that the user can't choose an end date is a today
     #     Given I click on "Would you like this donation to be ongoing?" checkbox --today
     #     When I choose an end date today
-    #     And I should see the red error validation message displayed --today
+    #     And I should see the red error validation message displayed under End date field --today
     #         | Please enter a future date. |
 
     # Scenario: Verify that the user can't choose an end date is a date in the past
     #     Given I click on "Would you like this donation to be ongoing?" checkbox --past
     #     When I choose an end date in the past
     #         | 08-11-2022 |
-    #     And I should see the red error validation message displayed --past
+    #     And I should see the red error validation message displayed under End date field --past
     #         | Please enter a future date. |
 
     # Scenario: Verify that shows red validate message when when enter wrong dd/mm/yyyy format
     #     Given I click on "Would you like this donation to be ongoing?" checkbox --wrong format
     #     When I fill the date in wrong format
     #         | 08112022 |
-    #     And I should see the red error validation message displayed --wrong format
+    #     And I should see the red error validation message displayed under End date field --wrong format
     #         | Please select a date by using the date picker or enter a date in 'dd-mm-yyyy' format |
 
-    Scenario: Verify that the donation unsuccessfully when one of the 3 cards is incorrectly entered (Visa, MasterCard, Amex)
-        Given I select Amount to donate --incorrect card
-        When I fill in the information in the Contact form and click on the Next button --incorrect card
+    Scenario: Verify that the user donation unsuccessfully
+        Given I select Amount to donate --unsuccessfully
+        When I fill in the information in the Contact form and click on the Next button --unsuccessfully
             | Firstname | Lastname | Email          | Adress | Suburb |
             | test      | test     | test@gmail.com | test   | ubu    |
-        And I select Question 1 value and fill Question 2 and click on the Next button --incorrect card
+        And I select Question 1 value and fill Question 2 and click on the Next button --unsuccessfully
             | test |
-        And I fill incorrectly entered card information at the Payment form and click on the GiveNow button --incorrect card
-            #| Westpac, St. George & Bank of Melbourne | 4564710000000012 | 0225 |
-            #| Westpac StGeorge | 45647100000012 | 02/40 |
-            | test             | 4564710000002 | 10/26 |
-        Then I should see the unsuccess donation message displayed --incorrect card
+        And I fill incorrectly entered card information at the Payment form and click on GiveNow buton --unsuccessfully
+            | Westpac, St. George & Bank of Melbourne | 4293189100000008 | 04/32 |
+        Then I should see the unsuccess payment message displayed --unsuccessfully
             | Payment Error |
+
+    # Scenario: Verify that the donation unsuccessfully when one of the 3 cards is incorrectly entered (Visa, MasterCard, Amex)
+    #     Given I select Amount to donate --incorrect card
+    #     When I fill in the information in the Contact form and click on the Next button --incorrect card
+    #         | Firstname | Lastname | Email          | Adress | Suburb |
+    #         | test      | test     | test@gmail.com | test   | ubu    |
+    #     And I select Question 1 value and fill Question 2 and click on the Next button --incorrect card
+    #         | test |
+    #     And I fill incorrectly entered card information at the Payment form and click on the GiveNow button --incorrect card
+    #         | Westpac, St. George & Bank of Melbourne | 36430000000007 | 0632 |
+    #     Then I should see the red error message displayed under CardNumber field --incorrect card
+    #         | Card type not accepted. |

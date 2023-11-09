@@ -76,7 +76,7 @@ When('I click on the "GiveNow" button at the Payment form --Payment', function (
     landingCausePage.clickGiveNowBtn();
 });
 
-Then('I should validate error mesages in landing cause page step Payment', async function (table: DataTable) {
+Then('I should validate error messages in landing cause page step Payment', async function (table: DataTable) {
     expect(await landingCausePage.verifyPaymentMessage(table));
 });
 
@@ -699,7 +699,7 @@ When('I choose an end date in the future', async function() {
     await landingCausePage.chooseFutureDate();
 });
 
-Then('I should not see the red error validation message displayed --future', async function() {
+Then('I should not see the red error validation message displayed under End date field --future', async function() {
     expect (await landingCausePage.verifyFutureDate());
 });
 
@@ -713,7 +713,7 @@ When('I choose an end date today', function() {
     landingCausePage.chooseCurrentDate();
 });
 
-Then('I should see the red error validation message displayed --today', async function(table: DataTable) {
+Then('I should see the red error validation message displayed under End date field --today', async function(table: DataTable) {
     expect(await landingCausePage.verifyInvalidDate(table));
 });
 
@@ -727,7 +727,7 @@ When('I choose an end date in the past', async function(table: DataTable) {
     await landingCausePage.choosePastDate(table);
 });
 
-Then('I should see the red error validation message displayed --past', async function (table: DataTable) {
+Then('I should see the red error validation message displayed under End date field --past', async function (table: DataTable) {
     await landingCausePage.verifyInvalidDate(table);
 });
 
@@ -741,7 +741,7 @@ When('I fill the date in wrong format', async function(table: DataTable) {
     await landingCausePage.choosePastDate(table);
 });
 
-Then('I should see the red error validation message displayed --wrong format', async function (table: DataTable) {
+Then('I should see the red error validation message displayed under End date field --wrong format', async function (table: DataTable) {
     await landingCausePage.verifyInvalidDate(table);
 });
 
@@ -766,6 +766,32 @@ When('I fill incorrectly entered card information at the Payment form and click 
     await landingCausePage.clickGiveNowBtn();
 });
 
-Then('I should see the unsuccess donation message displayed --incorrect card', async function(table: DataTable) {
-    expect (await landingCausePage.verifyErrorMessage(table));
+Then('I should see the red error message displayed under CardNumber field --incorrect card', async function(table: DataTable) {
+    expect (await landingCausePage.verifyCardNumberError(table));
 });
+
+//Verify that the user donation unsuccessfully
+Given('I select Amount to donate --unsuccessfully', function() {
+    landingCausePage = new LandingCausePage();
+    landingCausePage.selectAmount();
+});
+
+When('I fill in the information in the Contact form and click on the Next button --unsuccessfully', async function(table: DataTable) {
+    await landingCausePage.fillContact(table);
+    await landingCausePage.clickNextBtn();
+});
+
+When('I select Question 1 value and fill Question 2 and click on the Next button --unsuccessfully', async function (table: DataTable) {
+    await landingCausePage.fillQuestions(table);
+    await landingCausePage.clickotherButton();  
+});
+
+When('I fill incorrectly entered card information at the Payment form and click on GiveNow buton --unsuccessfully', async function (table: DataTable) {
+    await landingCausePage.fillCreditCard(table);
+    await landingCausePage.clickGiveNowBtn();
+});
+
+Then('I should see the unsuccess payment message displayed --unsuccessfully', async function (table: DataTable) {
+    await landingCausePage.verifyErrorMessage(table);
+})
+
