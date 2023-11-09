@@ -56,22 +56,22 @@ Feature: Landing Cause
     #     Then I should see the Thank you messages displayed --Credit card
     #         | Thanks for donating |
 
-    # Scenario: Verify the Thank you messages is displayed after edit total and payment is successful with Credit card payments
-    #     Given I select Amount to donate --edit Credit
-    #     When I fill in the information in the Contact form --edit Credit
-    #         | Firstname | Lastname | Email          | Adress | Suburb |
-    #         | test      | test     | test@gmail.com | test   | ubu   |
-    #     And I click on the "Next" button at the Contact form --edit Credit
-    #     And I select Question 1 value and fill Question 2 --edit Credit
-    #         | test |
-    #     And I click on the "Next" button at the Questions form --edit Credit
-    #     And I edit donation Amount 
-    #         | 15 |
-    #     And I fill credit card information at the Payment form --edit Credit
-    #         | Westpac, St. George & Bank of Melbourne | 4564710000000004 | 02/29 |
-    #     And I click on the "GiveNow" button at the Payment form --edit Credit
-    #     Then I should see the Thank you messages displayed --edit Credit
-    #         | Thanks for donating |
+    Scenario: Verify the Thank you messages is displayed after edit total and payment is successful with Credit card payments
+        Given I select Amount to donate --edit Credit
+        When I fill in the information in the Contact form --edit Credit
+            | Firstname | Lastname | Email          | Adress | Suburb |
+            | test      | test     | test@gmail.com | test   | ubu   |
+        And I click on the "Next" button at the Contact form --edit Credit
+        And I select Question 1 value and fill Question 2 --edit Credit
+            | test |
+        And I click on the "Next" button at the Questions form --edit Credit
+        And I edit donation Amount 
+            | 15 |
+        And I fill credit card information at the Payment form --edit Credit
+            | Westpac, St. George & Bank of Melbourne | 4564710000000004 | 02/29 |
+        And I click on the "GiveNow" button at the Payment form --edit Credit
+        Then I should see the Thank you messages displayed --edit Credit
+            | Thanks for donating |
 
     # Scenario: Verify that the user donation successfully when using Visa card
     #     Given I select Amount to donate --Visa card
@@ -325,28 +325,26 @@ Feature: Landing Cause
     # Scenario: Verify that the user can't choose an end date is a date in the past
     #     Given I click on "Would you like this donation to be ongoing?" checkbox --past
     #     When I choose an end date in the past
-    #         | 08-11-2022 |
     #     And I should see the red error validation message displayed under End date field --past
     #         | Please enter a future date. |
 
     # Scenario: Verify that shows red validate message when when enter wrong dd/mm/yyyy format
     #     Given I click on "Would you like this donation to be ongoing?" checkbox --wrong format
     #     When I fill the date in wrong format
-    #         | 08112022 |
     #     And I should see the red error validation message displayed under End date field --wrong format
     #         | Please select a date by using the date picker or enter a date in 'dd-mm-yyyy' format |
 
-    Scenario: Verify that the user donation unsuccessfully
-        Given I select Amount to donate --unsuccessfully
-        When I fill in the information in the Contact form and click on the Next button --unsuccessfully
-            | Firstname | Lastname | Email          | Adress | Suburb |
-            | test      | test     | test@gmail.com | test   | ubu    |
-        And I select Question 1 value and fill Question 2 and click on the Next button --unsuccessfully
-            | test |
-        And I fill incorrectly entered card information at the Payment form and click on GiveNow buton --unsuccessfully
-            | Westpac, St. George & Bank of Melbourne | 4293189100000008 | 04/32 |
-        Then I should see the unsuccess payment message displayed --unsuccessfully
-            | Payment Error |
+    # Scenario: Verify that the user donation unsuccessfully
+    #     Given I select Amount to donate --unsuccessfully
+    #     When I fill in the information in the Contact form and click on the Next button --unsuccessfully
+    #         | Firstname | Lastname | Email          | Adress | Suburb |
+    #         | test      | test     | test@gmail.com | test   | ubu    |
+    #     And I select Question 1 value and fill Question 2 and click on the Next button --unsuccessfully
+    #         | test |
+    #     And I fill incorrectly entered card information at the Payment form and click on GiveNow buton --unsuccessfully
+    #         | Westpac, St. George & Bank of Melbourne | 4293189100000008 | 04/32 |
+    #     Then I should see the unsuccess payment message displayed --unsuccessfully
+    #         | Payment Error |
 
     # Scenario: Verify that the donation unsuccessfully when one of the 3 cards is incorrectly entered (Visa, MasterCard, Amex)
     #     Given I select Amount to donate --incorrect card

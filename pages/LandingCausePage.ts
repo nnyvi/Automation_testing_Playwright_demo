@@ -6,13 +6,22 @@ export class LandingCausePage {
     private Elements = {
         donateBtn: "//button[contains(text(), 'Donate Now')]",
         messageFail: "//ul[@class='list-unstyled']//li",
-        amountRadio: "//input[contains(@id, 'Option0')]/parent::label",
+        amountRadio: "//label[@donation-amount-index='0']",
+        $10: "//label[@donation-amount-index='0']",
+        $20: "//label[@donation-amount-index='1']",
+        $30: "//label[@donation-amount-index='2']",
+        $40: "//label[@donation-amount-index='3']",
+        $50: "//label[@donation-amount-index='4']",
         ongoingChk: "//label[@for='donationOngoing']",
         endDateinput: "//input[@id='endDate']",
         nextYearicon: "//span[@class='ui-icon ui-icon-circle-triangle-e']",
         datePicker: "//div[@id='ui-datepicker-div']",
         futureDate: "//td[@data-month='1' and @data-year='2024']//a[text()='29']",
         oneOffBtn: "//span[@class='One-off']/parent::label",
+        dailyBtn: "//span[@class='Daily']/parent::label",
+        weeklyBtn: "//span[@class='Weekly']/parent::label",
+        monthlyBtn: "//span[@class='Monthly']/parent::label",
+        quaterlyBtn: "//span[@class='Quarterly']/parent::label",
         form: "//div[@class='donation-payment py-0']",
         nextBtn: "//button[@data-step-target='2']",
         nextBtnQuestion: "//button[@data-step-target='3']",
@@ -26,6 +35,7 @@ export class LandingCausePage {
         ques1: "//input[@id='answers0.answer2']",
         ques2: "//input[@id='answers1.answer']",
         giveNowBtn: "//button[@style='visibility: visible;']",
+        creditCardError: "//label[@class='error']",
         cardholderName: "//input[@id='paymentCardName']",
         cardholderLabel: "//label[@id='paymentCardNameLabel']",
         cardNameError: "//label[@id='paymentCardName-error']",
@@ -65,13 +75,45 @@ export class LandingCausePage {
         await page.click(this.Elements.donateBtn);
     }
 
-    async selectAmount() {
-        await page.click(this.Elements.amountRadio);
+    async chooseAmount(amount: number) {
+        const elements = [this.Elements.$10, this.Elements.$20, this.Elements.$30, this.Elements.$40, this.Elements.$50];
+        let element = "";
+        switch (amount) {
+            case 10:
+                element = elements[0];
+                break;
+            case 20:
+                element = elements[1];
+                break;
+            case 30:
+                element = elements[2];
+                break;
+            case 40:
+                element = elements[3];
+                break;
+            default:
+                element = elements[4];
+        }
+        await page.click(element);
     }
 
-    async clickOneOff() {
-        await page.click(this.Elements.oneOffBtn);
-        
+    async chooseFrequency(freVal: string) {
+        switch (freVal) {
+            case 'One-off':
+                await page.click(this.Elements.oneOffBtn);
+                break;
+            case 'Daily':
+                await page.click(this.Elements.dailyBtn);
+                break;
+            case 'Weekly':
+                await page.click(this.Elements.weeklyBtn);
+                break;
+            case 'Monthly':
+                await page.click(this.Elements.monthlyBtn);
+                break;
+            default:
+                await page.click(this.Elements.quaterlyBtn);
+        }
     }
 
     async verifyMessage(table: DataTable) {
@@ -81,7 +123,6 @@ export class LandingCausePage {
     }
 
     async clickNextBtn() {
-        await page.waitForSelector(this.Elements.form, { timeout: 20000 });
         await page.click(this.Elements.nextBtn);
     }
 
@@ -108,12 +149,11 @@ export class LandingCausePage {
         await page.dblclick(this.Elements.suburb);
         const suburbInput = page.locator(this.Elements.suburbTxt);
         await suburbInput.type(amountInfo[1][4]);
-        await page.waitForTimeout(2000);
+        await page.waitForTimeout(1000);
         await suburbInput.press('Enter');
     }
 
     async clickNextBtnQuestion() {
-        await page.waitForSelector(this.Elements.form, { timeout: 10000 });
         await page.click(this.Elements.nextBtnQuestion);
     }
 
@@ -137,7 +177,6 @@ export class LandingCausePage {
     }
 
     async clickGiveNowBtn() {
-        await page.waitForSelector(this.Elements.giveNowBtn, { timeout: 20000 });
         await page.click(this.Elements.giveNowBtn);
     }
 
@@ -161,6 +200,17 @@ export class LandingCausePage {
         }
     }
 
+    async makePayment(Paymentmethod: string, table: DataTable) {
+        switch (Paymentmethod) {
+            case 'Credit':
+                await this.fillCreditCard(table)
+                break;
+            case 'Debit':
+                await this.fillDirectDebit(table)
+                break;
+        }
+    }
+
     async fillCreditCard(table: DataTable) {
         //const creditCardValue = table.raw();
         const elements = [
@@ -174,9 +224,21 @@ export class LandingCausePage {
             const creditValue = table.raw()[0][i];
             const iframe = await page.frameLocator('#mwIframe');
             const element1 = await iframe.locator(element);
-            await page.waitForTimeout(5000);
+            await page.waitForTimeout(500);
             await element1.fill(creditValue);
         }
+    }
+
+    async fillDirectDebit(table: DataTable) {
+        const inputVal = table.raw()[0];
+        await page.click(this.Elements.directDebitBtn);
+        await page.locator(this.Elements.accountName).fill(inputVal[0]);
+        await page.dblclick(this.Elements.BSB);
+        const bsbtxt = page.locator(this.Elements.BSBtxt);
+        await bsbtxt.type(inputVal[1]);
+        await page.waitForTimeout(500);
+        await bsbtxt.press("Enter");
+        await page.locator(this.Elements.accountNum).fill(inputVal[2]);
     }
 
     async verifySuccessPayment(table: DataTable) {
@@ -191,49 +253,37 @@ export class LandingCausePage {
         await input.fill(table.raw()[0][0]);
         await page.click(this.Elements.updateAmountBtn);
     }
-
-    async fillDirectDebit(table: DataTable) {
-        const inputVal = table.raw()[0];
-        await page.click(this.Elements.directDebitBtn);
-        await page.locator(this.Elements.accountName).fill(inputVal[0]);
-        await page.dblclick(this.Elements.BSB);
-        const bsbtxt = page.locator(this.Elements.BSBtxt);
-        await bsbtxt.type(inputVal[1]);
-        await page.waitForTimeout(10000);
-        await bsbtxt.press("Enter");
-        await page.locator(this.Elements.accountNum).fill(inputVal[2]);
-    }
-
+    
     async clickGiveNowDebit() {
         await page.click(this.Elements.debitGiveNowBtn);
     }
 
-    async clickQuesIcon() {
+    async hoverQuesIcon() {
         await page.hover(this.Elements.quesIcon);
     }
-    
-    async verifyTooltipTxt(table: DataTable){
+
+    async verifyTooltipTxt(table: DataTable) {
         const expectedTooltip = table.raw()[0][0];
         const actualTooltip = await page.textContent(this.Elements.tooltipTxt);
         expect(actualTooltip?.trim()).toBe(expectedTooltip.trim());
     }
 
-    async clickCompanyChk(table: DataTable){
+    async clickCompanyChk(table: DataTable) {
         await page.check(this.Elements.companyChk);
         await page.locator(this.Elements.companyInput).fill(table.raw()[0][0]);
     }
 
-    async removeFee(){
+    async removeFee() {
         await page.click(this.Elements.removeBtn);
         await page.click(this.Elements.removeFeeBtn);
     }
 
-    async addFee(){
+    async addFee() {
         await page.click(this.Elements.coverBtn);
         await page.click(this.Elements.addFeeBtn);
     }
 
-    async fillCardholder(table: DataTable){
+    async fillCardholder(table: DataTable) {
         const val = table.raw()[0][0];
         const iframe = await page.frameLocator('#mwIframe');
         const element = await iframe.locator(this.Elements.cardholderName);
@@ -241,37 +291,21 @@ export class LandingCausePage {
         await element.press("Tab");
     }
 
-    async verifyCardholderError(table: DataTable){
+    async verifyCreditCardError(table: DataTable) {
         const expectedValue = table.raw()[0][0];
         const ifream = await page.frameLocator('#mwIframe');
-        const element = await ifream.locator(this.Elements.cardNameError);
+        const element = await ifream.locator(this.Elements.creditCardError);
         const actualValue = await element.textContent();
-        expect (actualValue).toBe(expectedValue);
+        expect(actualValue).toBe(expectedValue);
     }
 
-    async verifyCardNumberError(table: DataTable){
-        const expectedValue = table.raw()[0][0];
-        const ifream = await page.frameLocator('#mwIframe');
-        const element = await ifream.locator(this.Elements.cardNumberError);
-        const actualValue = await element.textContent();
-        expect (actualValue).toBe(expectedValue);
-    }
-
-    async verifyExpiryError(table: DataTable){
-        const expectedValue = table.raw()[0][0];
-        const ifream = await page.frameLocator('#mwIframe');
-        const element = await ifream.locator(this.Elements.cardExpiryError);
-        const actualValue = await element.textContent();
-        expect (actualValue).toBe(expectedValue);
-    }
-
-    async verifyErrorMessage(table: DataTable){
+    async verifyErrorMessage(table: DataTable) {
         const expectedValue = table.raw()[0][0];
         const actualValue = await page.textContent(this.Elements.paymentErrorMess);
         expect(actualValue).toBe(expectedValue);
     }
 
-    async fillDate(table: DataTable){
+    async fillDate(table: DataTable) {
         const val = table.raw()[0][0];
         const iframe = await page.frameLocator('#mwIframe');
         const element = await iframe.locator(this.Elements.cardExpiry);
@@ -279,19 +313,19 @@ export class LandingCausePage {
         await element.press("Tab");
     }
 
-    async fillBSBblank(table: DataTable){
+    async fillBSBblank(table: DataTable) {
         await page.click(this.Elements.directDebitBtn);
         await page.locator(this.Elements.accountName).fill(table.raw()[0][0]);
         await page.locator(this.Elements.accountNum).fill(table.raw()[0][1]);
     }
 
-    async verifyDebitError(table: DataTable){
+    async verifyDebitError(table: DataTable) {
         const errorMessage = table.raw()[0][0];
         const actualMessage = await page.textContent(this.Elements.messageFail);
         expect(actualMessage).toBe(errorMessage);
     }
 
-    async fillAccountNum(table: DataTable){
+    async fillAccountNum(table: DataTable) {
         await page.click(this.Elements.directDebitBtn);
         await page.locator(this.Elements.accountNum).fill(table.raw()[0][0]);
     };
@@ -302,14 +336,6 @@ export class LandingCausePage {
         await cvv.fill(table.raw()[0][0]);
         await cvv.press("Tab");
     };
-
-    async verifyCVVinput(table: DataTable) {
-        const expectedMess = table.raw()[0][0];
-        const iframe = await page.frameLocator('#mwIframe');
-        const element = await iframe.locator(this.Elements.CVVError);
-        const actualMess = await element.textContent();
-        expect (actualMess).toBe(expectedMess);
-    }
 
     async clickAUhyperlink() {
         await page.click(this.Elements.AUhyperlink);
@@ -327,25 +353,29 @@ export class LandingCausePage {
         await page.uncheck(this.Elements.ongoingChk);
     }
 
-    async chooseFutureDate() {
-        await page.click(this.Elements.endDateinput);
-        for (let i = 0 ; i < 3 ; i ++) {
-            await page.waitForSelector(this.Elements.nextYearicon);
-            await page.click(this.Elements.nextYearicon);
-        }
-        await page.waitForSelector(this.Elements.datePicker);
-        await page.click(this.Elements.futureDate);
-    }
-
-    async verifyFutureDate() {
+    async verifyValidDate() {
         await expect(page.locator(this.Elements.messageFail)).not.toBeVisible();
     }
 
-    async chooseCurrentDate() {
+    async chooseDate(status: string) {
         const element = page.locator(this.Elements.endDateinput);
         await element.click();
-        const currentDate = new Date();
-        const dateTxt = `${currentDate.getDate()}-${currentDate.getMonth()}-${currentDate.getFullYear()}`;
+        const date = new Date();
+        let dateTxt = "";
+        switch (status) {
+            case 'past':
+                dateTxt = `${date.getDate() - 7}-${date.getMonth() + 1}-${date.getFullYear()}`;
+                break;
+            case 'current':
+                dateTxt = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+                break;
+            case 'future':
+                dateTxt = `${date.getDate() + 7}-${date.getMonth() + 1}-${date.getFullYear()}`;
+                break;
+            case 'wrong format':
+                dateTxt = `${date.getDate()}${date.getMonth()}${date.getFullYear()}`;
+                break;
+        }
         await element.fill(dateTxt);
     }
 
@@ -353,11 +383,5 @@ export class LandingCausePage {
         const errorMessage = table.raw()[0][0];
         const actualMessage = await page.textContent(this.Elements.messageFail);
         expect(actualMessage).toBe(errorMessage);
-    }
-
-    async choosePastDate(table: DataTable) {
-        const element = await page.locator(this.Elements.endDateinput);
-        await element.click();
-        await element.fill(table.raw()[0][0]);
     }
 }
