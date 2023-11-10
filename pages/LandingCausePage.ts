@@ -6,7 +6,6 @@ export class LandingCausePage {
     private Elements = {
         donateBtn: "//button[contains(text(), 'Donate Now')]",
         messageFail: "//ul[@class='list-unstyled']//li",
-        amountRadio: "//label[@donation-amount-index='0']",
         $10: "//label[@donation-amount-index='0']",
         $20: "//label[@donation-amount-index='1']",
         $30: "//label[@donation-amount-index='2']",
@@ -14,15 +13,12 @@ export class LandingCausePage {
         $50: "//label[@donation-amount-index='4']",
         ongoingChk: "//label[@for='donationOngoing']",
         endDateinput: "//input[@id='endDate']",
-        nextYearicon: "//span[@class='ui-icon ui-icon-circle-triangle-e']",
-        datePicker: "//div[@id='ui-datepicker-div']",
         futureDate: "//td[@data-month='1' and @data-year='2024']//a[text()='29']",
         oneOffBtn: "//span[@class='One-off']/parent::label",
         dailyBtn: "//span[@class='Daily']/parent::label",
         weeklyBtn: "//span[@class='Weekly']/parent::label",
         monthlyBtn: "//span[@class='Monthly']/parent::label",
         quaterlyBtn: "//span[@class='Quarterly']/parent::label",
-        form: "//div[@class='donation-payment py-0']",
         nextBtn: "//button[@data-step-target='2']",
         nextBtnQuestion: "//button[@data-step-target='3']",
         firstName: "//*[@id='firstName']",
@@ -37,7 +33,6 @@ export class LandingCausePage {
         giveNowBtn: "//button[@style='visibility: visible;']",
         creditCardError: "//label[@class='error']",
         cardholderName: "//input[@id='paymentCardName']",
-        cardholderLabel: "//label[@id='paymentCardNameLabel']",
         cardNameError: "//label[@id='paymentCardName-error']",
         cardNumber: "//input[@id='paymentCardNumberMask']",
         cardNumberError: "//label[@id='paymentCardNumber-error']",
@@ -200,14 +195,47 @@ export class LandingCausePage {
         }
     }
 
-    async makePayment(Paymentmethod: string, table: DataTable) {
-        switch (Paymentmethod) {
+    async makePayment(paymentMethod: string, table: DataTable) {
+        switch (paymentMethod) {
             case 'Credit':
                 await this.fillCreditCard(table)
                 break;
             case 'Debit':
                 await this.fillDirectDebit(table)
                 break;
+        }
+    }
+
+    async makeErrorCredit (paymentField: string, val: any) {
+        let element = "";
+        switch (paymentField) {
+            case 'Cardholder':
+                element = this.Elements.cardholderName;
+            break;
+            case 'Cardexpiry':
+                element = this.Elements.cardExpiry;
+            break;
+            case 'CVV':
+                element = this.Elements.CVVinput;
+            break;
+        }
+        const iframe = await page.frameLocator('#mwIframe');
+        const field = await iframe.locator(element);
+        await field.fill(val);
+        await field.press("Tab");
+    }
+
+    async makeErrorDebit (paymentField: string, val: any) {
+        switch(paymentField) {
+            case 'Accountnum':
+                await page.click(this.Elements.directDebitBtn);
+                await page.locator(this.Elements.accountNum).fill(val);
+            break;
+            case 'BSB':
+                await page.click(this.Elements.directDebitBtn);
+                await page.dblclick(this.Elements.BSB);
+                const bsbtxt = page.locator(this.Elements.BSBtxt);
+                await bsbtxt.press("Enter");
         }
     }
 
@@ -283,14 +311,6 @@ export class LandingCausePage {
         await page.click(this.Elements.addFeeBtn);
     }
 
-    async fillCardholder(table: DataTable) {
-        const val = table.raw()[0][0];
-        const iframe = await page.frameLocator('#mwIframe');
-        const element = await iframe.locator(this.Elements.cardholderName);
-        await element.fill(val);
-        await element.press("Tab");
-    }
-
     async verifyCreditCardError(table: DataTable) {
         const expectedValue = table.raw()[0][0];
         const ifream = await page.frameLocator('#mwIframe');
@@ -305,37 +325,11 @@ export class LandingCausePage {
         expect(actualValue).toBe(expectedValue);
     }
 
-    async fillDate(table: DataTable) {
-        const val = table.raw()[0][0];
-        const iframe = await page.frameLocator('#mwIframe');
-        const element = await iframe.locator(this.Elements.cardExpiry);
-        await element.fill(val);
-        await element.press("Tab");
-    }
-
-    async fillBSBblank(table: DataTable) {
-        await page.click(this.Elements.directDebitBtn);
-        await page.locator(this.Elements.accountName).fill(table.raw()[0][0]);
-        await page.locator(this.Elements.accountNum).fill(table.raw()[0][1]);
-    }
-
     async verifyDebitError(table: DataTable) {
         const errorMessage = table.raw()[0][0];
         const actualMessage = await page.textContent(this.Elements.messageFail);
         expect(actualMessage).toBe(errorMessage);
     }
-
-    async fillAccountNum(table: DataTable) {
-        await page.click(this.Elements.directDebitBtn);
-        await page.locator(this.Elements.accountNum).fill(table.raw()[0][0]);
-    };
-
-    async fillCVV(table: DataTable) {
-        const iframe = await page.frameLocator('#mwIframe');
-        const cvv = await iframe.locator(this.Elements.CVVinput);
-        await cvv.fill(table.raw()[0][0]);
-        await cvv.press("Tab");
-    };
 
     async clickAUhyperlink() {
         await page.click(this.Elements.AUhyperlink);

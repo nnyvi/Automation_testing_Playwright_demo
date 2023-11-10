@@ -452,8 +452,8 @@ When('I click on the "Next" button at the Questions form --Cardholder', function
     landingCausePage.clickotherButton();
 });
 
-When('I fill less than 3 characters in the Cardholder name field at the Payment form --Cardholder', async function (table: DataTable) {
-    await landingCausePage.fillCardholder(table);
+When('I fill less than 3 characters in the Cardholder name field at the Payment form --Cardholder', async function () {
+    await landingCausePage.makeErrorCredit('Cardholder', 'we');
 });
 
 Then('I should see the error message displayed --Cardholder', async function (table: DataTable) {
@@ -516,8 +516,8 @@ When('I click on the "Next" button at the Questions form --date invalid', functi
     landingCausePage.clickotherButton();
 });
 
-When('I fill invalid date in the Cardholder name field at the Payment form --date invalid', async function (table: DataTable) {
-    await landingCausePage.fillDate(table);
+When('I fill invalid date in the Cardholder name field at the Payment form --date invalid', async function () {
+    await landingCausePage.makeErrorCredit('Cardexpiry', '3045');
 });
 
 Then('I should see the error message displayed --date invalid', async function (table: DataTable) {
@@ -579,8 +579,8 @@ When('I select and fill question and click on the "Next" button in the Question 
     await landingCausePage.clickotherButton();
 });
 
-When('I enter short data in "CVV" field --short CVV', async function (table: DataTable) {
-    await landingCausePage.fillCVV(table);
+When('I enter short data in "CVV" field --short CVV', async function () {
+    await landingCausePage.makeErrorCredit('CVV', '1');
 });
 
 Then('I should see the error message displaying --short CVV', async function (table: DataTable) {
@@ -608,8 +608,8 @@ When('I select and fill question and click on the "Next" button in the Question 
     await landingCausePage.clickotherButton();
 });
 
-When('I enter long data in "CVV" field --long CVV', async function (table: DataTable) {
-    await landingCausePage.fillCVV(table);
+When('I enter long data in "CVV" field --long CVV', async function () {
+    await landingCausePage.makeErrorCredit('CVV', '1234');
 });
 
 Then('I should see the error message displaying --long CVV', async function (table: DataTable) {
@@ -632,9 +632,8 @@ When('I select Question 1 value and fill Question 2 and click Next button --BSB 
     await landingCausePage.clickotherButton();
 });
 
-When('I fill in "Account Name" and "Account Number" field and click GiveNow button --BSB blank', async function (table: DataTable) {
-    await landingCausePage.fillBSBblank(table);
-    await landingCausePage.clickGiveNowDebit();
+When('I leave the BSB input blank --BSB blank', async function () {
+    await landingCausePage.makeErrorDebit('BSB', "");
 });
 
 Then('I should see the error message displayed --BSB blank', async function (table: DataTable) {
@@ -657,8 +656,8 @@ When('I select Question 1 value and fill Question 2 and click Next button --Acco
     await landingCausePage.clickotherButton();
 });
 
-When('I enter less than 3 characters in the "Account Number" field --Account Number', async function (table: DataTable) {
-    await landingCausePage.fillAccountNum(table);
+When('I enter less than 3 characters in the "Account Number" field --Account Number', async function () {
+    await landingCausePage.makeErrorDebit('Accountnum', '39');
 });
 
 Then('I should see the error message displayed --Account Number', async function (table: DataTable) {

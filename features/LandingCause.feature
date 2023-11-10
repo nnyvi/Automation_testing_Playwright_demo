@@ -56,22 +56,22 @@ Feature: Landing Cause
     #     Then I should see the Thank you messages displayed --Credit card
     #         | Thanks for donating |
 
-    Scenario: Verify the Thank you messages is displayed after edit total and payment is successful with Credit card payments
-        Given I select Amount to donate --edit Credit
-        When I fill in the information in the Contact form --edit Credit
-            | Firstname | Lastname | Email          | Adress | Suburb |
-            | test      | test     | test@gmail.com | test   | ubu   |
-        And I click on the "Next" button at the Contact form --edit Credit
-        And I select Question 1 value and fill Question 2 --edit Credit
-            | test |
-        And I click on the "Next" button at the Questions form --edit Credit
-        And I edit donation Amount 
-            | 15 |
-        And I fill credit card information at the Payment form --edit Credit
-            | Westpac, St. George & Bank of Melbourne | 4564710000000004 | 02/29 |
-        And I click on the "GiveNow" button at the Payment form --edit Credit
-        Then I should see the Thank you messages displayed --edit Credit
-            | Thanks for donating |
+    # Scenario: Verify the Thank you messages is displayed after edit total and payment is successful with Credit card payments
+    #     Given I select Amount to donate --edit Credit
+    #     When I fill in the information in the Contact form --edit Credit
+    #         | Firstname | Lastname | Email          | Adress | Suburb |
+    #         | test      | test     | test@gmail.com | test   | ubu   |
+    #     And I click on the "Next" button at the Contact form --edit Credit
+    #     And I select Question 1 value and fill Question 2 --edit Credit
+    #         | test |
+    #     And I click on the "Next" button at the Questions form --edit Credit
+    #     And I edit donation Amount 
+    #         | 15 |
+    #     And I fill credit card information at the Payment form --edit Credit
+    #         | Westpac, St. George & Bank of Melbourne | 4564710000000004 | 02/29 |
+    #     And I click on the "GiveNow" button at the Payment form --edit Credit
+    #     Then I should see the Thank you messages displayed --edit Credit
+    #         | Thanks for donating |
 
     # Scenario: Verify that the user donation successfully when using Visa card
     #     Given I select Amount to donate --Visa card
@@ -204,7 +204,6 @@ Feature: Landing Cause
     #         | test |
     #     And I click on the "Next" button at the Questions form --Cardholder
     #     And I fill less than 3 characters in the Cardholder name field at the Payment form --Cardholder
-    #         | We |
     #     Then I should see the error message displayed --Cardholder
     #         | Please enter at least 3 characters. |
         
@@ -233,7 +232,6 @@ Feature: Landing Cause
     #         | test |
     #     And I click on the "Next" button at the Questions form --date invalid
     #     And I fill invalid date in the Cardholder name field at the Payment form --date invalid
-    #         | 2330 |
     #     Then I should see the error message displayed --date invalid
     #         | Date invalid. |
 
@@ -252,18 +250,17 @@ Feature: Landing Cause
     #     Then I should see the unsuccess donation message displayed --expired card
     #         | Payment Error |
 
-    # Scenario: Verify that the donation unsuccessfully when entering short data in "CVV" field incorrect
-    #     Given I select type of donation, amount to donate --short CVV
-    #     When I click on the "Donate Now" button at the Amount form --short CVV
-    #     And I fill in the information and click on the "Next" button in the Contact form --short CVV
-    #         | Firstname | Lastname | Email          | Adress | Suburb |
-    #         | test      | test     | test@gmail.com | test   | ubu    |
-    #     And I select and fill question and click on the "Next" button in the Question form --short CVV
-    #         | test |
-    #     And I enter short data in "CVV" field --short CVV
-    #         | 1 |
-    #     Then I should see the error message displaying --short CVV
-    #         | Too short. |
+    Scenario: Verify that the donation unsuccessfully when entering short data in "CVV" field incorrect
+        Given I select type of donation, amount to donate --short CVV
+        When I click on the "Donate Now" button at the Amount form --short CVV
+        And I fill in the information and click on the "Next" button in the Contact form --short CVV
+            | Firstname | Lastname | Email          | Adress | Suburb |
+            | test      | test     | test@gmail.com | test   | ubu    |
+        And I select and fill question and click on the "Next" button in the Question form --short CVV
+            | test |
+        And I enter short data in "CVV" field --short CVV
+        Then I should see the error message displaying --short CVV
+            | Too short. |
 
     # Scenario: Verify that the donation unsuccessfully when entering long data in "CVV" field incorrect
     #     Given I select type of donation, amount to donate --long CVV
@@ -274,7 +271,6 @@ Feature: Landing Cause
     #     And I select and fill question and click on the "Next" button in the Question form --long CVV
     #         | test |
     #     And I enter long data in "CVV" field --long CVV
-    #         | 1234 |
     #     Then I should see the error message displaying --long CVV
     #         | Too long. |
 
@@ -285,8 +281,7 @@ Feature: Landing Cause
     #         | test      | test     | test@gmail.com | test   | ubu    |
     #     And I select Question 1 value and fill Question 2 and click Next button --BSB blank
     #         | test |
-    #     And I fill in "Account Name" and "Account Number" field and click GiveNow button --BSB blank
-    #         | Merchant Warrior | 397351 |
+    #     And I leave the BSB input blank --BSB blank --BSB blank
     #     Then I should see the error message displayed --BSB blank
     #         | Must select at least one option |
 
@@ -298,9 +293,8 @@ Feature: Landing Cause
     #     And I select Question 1 value and fill Question 2 and click Next button --Account Number
     #         | test |
     #     And I enter less than 3 characters in the "Account Number" field --Account Number
-    #         | 39 |
     #     Then I should see the error message displayed --Account Number
-    #         | Please lengthen this text to 4 characters or more (you are currently using 2 character). |
+    #         | Please lengthen this text to 4 characters or more (you are currently using 2 characters). |
 
     # Scenario: Verify that the "From Australia" form is displayed when the "Enter a foreign address" hyperlink is clicked
     #     Given I select Amount to donate --From Australia
