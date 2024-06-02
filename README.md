@@ -1,2 +1,3 @@
-# Playwright_BDD_demo
-search for info on Google page
+# Automation Testing by Playwright 
+// "demo" branch including testing search feature for info on Google page
+// "give now" branch including testing donation process
